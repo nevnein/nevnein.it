@@ -1,0 +1,11 @@
+.mainContainer {
+  max-width: calc(var(--main-width) + 4ch);
+  padding: 0 2ch;
+  margin: 0 auto;
+}
+
+@media print {
+  .mainContainer {
+    padding-bottom: 0;
+  }
+}

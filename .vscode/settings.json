@@ -1,0 +1,7 @@
+{
+  "[mdx]": {
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 75,
+    "editor.acceptSuggestionOnCommitCharacter": false
+  }
+}

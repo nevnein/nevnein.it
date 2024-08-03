@@ -1,0 +1,112 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --line: 1.25rem;
+  --main-width: 60ch;
+  --padded-main-width: calc(var(--main-width) + 4ch);
+  --foreground: rgba(0 0 0 / 1);
+  --background: rgba(255 255 255 / 1);
+  --decoration: rgba(173 181 189 / 1);
+  --blue-rgb: 38 72 225;
+  --blue: rgb(var(--blue-rgb));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground: rgba(255 255 255 / 1);
+    --background: rgba(0 0 0 / 1);
+    --decoration: rgba(89 94 98 / 1);
+  }
+}
+
+body {
+  font-size: 1rem;
+  line-height: var(--line);
+  background-color: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  font-family: "Berkeley Mono", ui-monospace, Menlo, Monaco, "Cascadia Mono",
+    "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace",
+    "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+}
+
+@media print {
+  :root {
+    --main-width: 90ch;
+    --line: 1.125rem;
+    --foreground: rgba(0 0 0 / 1);
+    --background: rgba(255 255 255 / 1);
+    --decoration: rgba(173 181 189 / 1);
+  }
+
+  body {
+    font-size: 12px;
+  }
+
+  .print-hidden {
+    display: none;
+  }
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+button {
+  cursor: pointer;
+  appearance: none;
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+  line-height: var(--line);
+  text-decoration-line: underline;
+  text-decoration-color: rgba(var(--blue-rgb) / 0.25);
+  color: var(--foreground);
+}
+
+a,
+a:visited {
+  text-decoration-color: rgba(var(--blue-rgb) / 0.25);
+  color: var(--foreground);
+}
+
+button:hover,
+a:hover,
+a:visited:hover {
+  background-color: var(--foreground);
+  text-decoration: none;
+  color: var(--background);
+}

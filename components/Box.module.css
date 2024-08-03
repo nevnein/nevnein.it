@@ -1,0 +1,5 @@
+.box {
+  display: grid;
+  grid-template-columns: 1ch minmax(20ch, 88ch) 1ch;
+  grid-auto-rows: var(--line);
+}

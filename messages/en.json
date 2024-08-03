@@ -1,0 +1,29 @@
+{
+  "HomePage": {
+    "meta": {
+      "title": "NevNein",
+      "description": "Personal website of Adam Di Mario"
+    },
+    "greeting": "Hello, I'm Adam and this is my website.",
+    "intro": "It will probably be a constant work in progress, I'll just keep adding stuff when/if I have time. Below are some useful links.",
+    "locale": "Versione italiana",
+    "colophon": "This webiste uses technical cookies to persist your language preference. The typeface used on this website is Berkeley Mono by Berkeley Graphics ©. Every other work on nevnein.it © 2024 by Adam Di Mario is licensed under <license>CC BY-NC-SA 4.0</license>."
+  },
+  "CV": {
+    "meta": {
+      "title": "Adam Di Mario",
+      "description": "Curriculum Vitæ of Adam Di Mario"
+    },
+    "toc": "Table of contents",
+    "experience": "Experience",
+    "skillset": "Skillset",
+    "core": "Core",
+    "auxiliary": "Auxiliary",
+    "soft": "Soft",
+    "others": "Other interests",
+    "studying": "Currently studying...",
+    "utils": "Utility",
+    "print": "Print this page",
+    "locale": "Versione italiana"
+  }
+}

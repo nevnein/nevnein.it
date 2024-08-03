@@ -1,4 +1,16 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+import withMDX from "@next/mdx";
+import headingID from "remark-heading-id";
+import createNextIntlPlugin from "next-intl/plugin";
 
-export default nextConfig;
+const withNextIntl = createNextIntlPlugin();
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
+};
+
+export default withMDX({
+  options: {
+    remarkPlugins: [headingID],
+  },
+})(withNextIntl(nextConfig));

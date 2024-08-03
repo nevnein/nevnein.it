@@ -1,0 +1,58 @@
+.container {
+  padding-bottom: calc(var(--line) * 20);
+}
+
+.contacts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.index {
+  list-style-type: none;
+}
+
+.index .index {
+  padding-left: 2ch;
+}
+
+.index li:has(> a:hover)::marker,
+.index li:has(> button:hover)::marker {
+  content: "‣ ";
+}
+
+.tocRail {
+  padding-top: calc(2 * var(--line));
+}
+
+.toc h2 {
+  font-weight: bold;
+}
+
+@media screen and (min-width: 75rem) {
+  .contacts {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .tocRail {
+    display: flex;
+    position: absolute;
+    width: calc((100% - var(--padded-main-width)) / 2);
+    padding-top: calc(9 * var(--line));
+    padding-left: 2ch;
+    padding-right: 2ch;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+
+  .toc {
+    position: sticky;
+    top: var(--line);
+    width: 30ch;
+    max-width: 100%;
+  }
+}
