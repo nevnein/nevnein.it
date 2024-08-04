@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import styles from "./layout.module.css";
-import "./globals.css";
 import { getMetadata } from "../utils/getMetadata";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { locales } from "@/config";
 
 export async function generateMetadata({
   params: { locale },
@@ -13,7 +13,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  return [{ locale: "en" }, { locale: "it" }];
+  return locales.map((locale) => ({ locale }));
 }
 
 export const dynamicParams = false;

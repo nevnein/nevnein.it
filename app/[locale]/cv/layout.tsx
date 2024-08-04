@@ -6,6 +6,7 @@ import { unstable_setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import { PrintButton } from "@/components/PrintButton";
 import { getMetadata } from "@/app/utils/getMetadata";
+import { locales } from "@/config";
 
 export async function generateMetadata({
   params: { locale },
@@ -14,6 +15,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   return getMetadata(locale, "CV");
 }
+
+export async function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export const dynamicParams = false;
 
 export default function CvLayout({
   children,

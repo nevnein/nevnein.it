@@ -15,5 +15,8 @@ export async function getMetadata(
       title: t("meta.title"),
       description: t("meta.description"),
     },
+    formatDetection: {
+      telephone: false,
+    },
   };
 }
