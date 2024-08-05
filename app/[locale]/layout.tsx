@@ -3,7 +3,8 @@ import styles from "./layout.module.css";
 import { getMetadata } from "../utils/getMetadata";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { locales } from "@/config";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { getMessages, unstable_setRequestLocale } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
 
 export async function generateMetadata({
   params: { locale },
@@ -19,7 +20,7 @@ export async function generateStaticParams() {
 
 export const dynamicParams = false;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params: { locale },
 }: Readonly<{
@@ -28,11 +29,15 @@ export default function RootLayout({
 }>) {
   unstable_setRequestLocale(locale);
 
+  const messages = await getMessages();
+
   return (
     <html lang={locale}>
       <SpeedInsights />
       <body style={{ position: "relative" }}>
-        <main className={styles.mainContainer}>{children}</main>
+        <NextIntlClientProvider messages={messages}>
+          <main className={styles.mainContainer}>{children}</main>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
