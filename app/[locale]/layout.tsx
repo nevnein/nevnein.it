@@ -4,6 +4,7 @@ import { getMetadata } from "../utils/getMetadata";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { locales } from "@/config";
 import { unstable_setRequestLocale } from "next-intl/server";
+import "./globals.css";
 
 export async function generateMetadata({
   params: { locale },
