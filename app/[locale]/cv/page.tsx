@@ -1,4 +1,5 @@
 import { locales } from "@/config";
+import { unstable_setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -12,6 +13,8 @@ export default async function Cv({
 }: {
   params: { locale: string };
 }) {
+  unstable_setRequestLocale(locale);
+
   try {
     const Content = (await import(`./${locale}.mdx`)).default;
     return <Content />;

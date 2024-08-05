@@ -3,6 +3,7 @@ import styles from "./layout.module.css";
 import { getMetadata } from "../utils/getMetadata";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { locales } from "@/config";
+import { unstable_setRequestLocale } from "next-intl/server";
 
 export async function generateMetadata({
   params: { locale },
@@ -25,6 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }>) {
+  unstable_setRequestLocale(locale);
+
   return (
     <html lang={locale}>
       <SpeedInsights />
