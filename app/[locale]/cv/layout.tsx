@@ -51,7 +51,7 @@ export default function CvLayout({
         <a href="mailto:nev9adam@gmail">nev9adam@gmail.com</a>
         <a href="tel:+393207117228">+39 320 7117 228</a>
       </div>
-      <div className={styles.tocRail}>
+      <div className={`${styles.tocRail} print-hidden`}>
         <div className={styles.toc}>
           <h2>{t("toc")}</h2>
           <Separator width={90} type="double" />
