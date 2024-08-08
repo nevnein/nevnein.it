@@ -11,7 +11,15 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
-  return getMetadata(locale, "HomePage");
+  const basicMetadata = await getMetadata(locale, "HomePage");
+  return locale === "it"
+    ? {
+        ...basicMetadata,
+        alternates: {
+          canonical: "https://www.nevnein.it",
+        },
+      }
+    : basicMetadata;
 }
 
 export async function generateStaticParams() {

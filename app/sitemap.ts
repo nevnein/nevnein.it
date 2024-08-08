@@ -2,7 +2,7 @@ import { defaultLocale, locales } from "@/config";
 import { MetadataRoute } from "next";
 
 const pathnames = ["/", "/cv"];
-const host = "https://nevnein.it";
+const host = "https://www.nevnein.it";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   function getUrl(pathname: string, locale: string) {
