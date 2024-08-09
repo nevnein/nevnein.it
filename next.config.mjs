@@ -14,6 +14,11 @@ const nextConfig = {
         destination: "/it/cv",
         permanent: true,
       },
+      {
+        source: "/adam-di-mario-cv.pdf",
+        destination: "/it/cv",
+        permanent: true,
+      },
     ];
   },
 };
