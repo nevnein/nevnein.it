@@ -1,41 +1,40 @@
-import { readFile } from "fs/promises";
 import { ImageResponse } from "next/og";
 import { ImageResponseOptions } from "next/server";
-import { resolve } from "path";
 
 // https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image#generate-images-using-code-js-ts-tsx
 // https://github.com/vercel/satori#css
+const getFonts = async (): Promise<ImageResponseOptions["fonts"]> => {
+  const regular = await fetch(
+    new URL("https://nevnein.it/BerkeleyMono-Regular.woff", import.meta.url)
+  );
+  const bold = await fetch(
+    new URL("https://nevnein.it/BerkeleyMono-Bold.woff", import.meta.url)
+  );
+  if (!regular.ok || !bold.ok) {
+    throw new Error("Failed to fetch fonts");
+  }
+
+  return [
+    {
+      name: "Berkeley Mono",
+      data: await regular.arrayBuffer(),
+      style: "normal",
+      weight: 400,
+    },
+    {
+      name: "Berkeley Mono",
+      data: await bold.arrayBuffer(),
+      style: "normal",
+      weight: 600,
+    },
+  ];
+};
 
 export const getOgImage = async (
   title: string,
   section?: string,
   extra?: string
 ): Promise<ImageResponse> => {
-  const getFonts = async (): Promise<ImageResponseOptions["fonts"]> => {
-    const fontPath = resolve(
-      process.cwd().includes(".next") ? ".next/server/app/fonts" : "app/fonts"
-    );
-    console.log(fontPath);
-    const regular = await readFile(
-      resolve(fontPath, "BerkeleyMono-Regular.ttf")
-    );
-    const bold = await readFile(resolve(fontPath, "BerkeleyMono-Bold.ttf"));
-    return [
-      {
-        name: "Berkeley Mono",
-        data: regular,
-        style: "normal",
-        weight: 400,
-      },
-      {
-        name: "Berkeley Mono",
-        data: bold,
-        style: "normal",
-        weight: 600,
-      },
-    ];
-  };
-
   return new ImageResponse(
     (
       <div
