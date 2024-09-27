@@ -7,6 +7,7 @@
     "greeting": "Ciao, sono Adam e questo è il mio sito.",
     "intro": "Sarà probabilmente un work in progress costante, continuerò ad aggiungere cose quando/se avrò tempo. Qui in basso alcuni link utili.",
     "locale": "English version",
+    "notes": "Note",
     "colophon": "Questo sito utilizza cookie tecnici per la persistenza delle preferenze riguardanti la lingua. Il carattere tipografico utilizzato su questo sito è Berkeley Mono di Berkeley Graphics ©. Ogni altro lavoro su nevnein.it © 2024 di Adam Di Mario è sotto licenza <license>CC BY-NC-SA 4.0</license>."
   },
   "CV": {
@@ -25,5 +26,17 @@
     "utils": "Utility",
     "print": "Stampa questa pagina",
     "locale": "English version"
+  },
+  "Notes": {
+    "meta": {
+      "title": "Note",
+      "description": "Raccolta di note su roba tech, di Adam Di Mario"
+    },
+    "notes": "Note",
+    "intro": "Qui raccolgo alcune note su roba tech, per la maggior parte cose che ho fatto o scoperto meritevoli di un po' di spazio. Alcune sono lunghi articoli, altre solo poche righe di codice. Non è un vero blog, più una raccolta di cose che probabilmente riguarderò in futuro, e una scusa per esercitare le mie scarse capacità di scrittura.",
+    "disclaimer": "Le cose nell'ambito tech cambiano in fretta, qualche contenuto potrebbe essere non più rilevante. Sentitevi liberi di mandarmi una mail doveste trovare qualche errore.",
+    "published": "Pubblicato il",
+    "lastUpdated": "Aggiornato il",
+    "topics": "Argomenti"
   }
 }

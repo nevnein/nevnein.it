@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import styles from "./layout.module.css";
 import { getMetadata } from "../utils/getMetadata";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { locales } from "@/config";
@@ -43,8 +42,13 @@ export default async function RootLayout({
     <html lang={locale}>
       <SpeedInsights />
       <body style={{ position: "relative" }}>
+        <div
+          aria-hidden
+          style={{ width: "1ch", height: "var(--line)" }}
+          id="measurer"
+        ></div>
         <NextIntlClientProvider messages={messages}>
-          <main className={styles.mainContainer}>{children}</main>
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>

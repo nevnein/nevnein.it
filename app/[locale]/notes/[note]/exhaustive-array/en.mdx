@@ -1,0 +1,65 @@
+export const metadata = {
+  title: "Check if a tuple exhausts a union in TypeScript",
+  description: "How to write a TypeScript type that checks if every member of a union appears exactly once in a tuple",
+  tags: "typescript",
+  published: "2024-09-14",
+  lastModified: "2024-09-14",
+}
+
+When I have a little time to spend in between some tasks, I usually wander on TS-related discord channels and lend a hand in helping channels. Here's a fun question I spent some time solving:
+
+> Is it possible to create a type Exhaustive\<U, A\> that checks that every element of the array A is a constituent of the union U and each constituent of U appears exactly once in A?
+
+Here is my stab at it:
+
+```ts twoslash
+type Exhaustive<U, A extends unknown[]> = [U] extends [never] 
+  ? A extends []
+    ? true
+    : false
+  : A extends [infer F, ...infer Rest]
+  ? F extends U
+    ? Exhaustive<Exclude<U, F>, Rest>
+    : false
+  : false;
+```
+
+As the name suggests, we have to exhaust all the possible pairs U-A, so we're going to recursively check them all by removing the pairs from subsequent checks, until the array is empty and the union is never.
+
+```ts twoslash
+type Exhaustive<U, A extends unknown[]> = [U] extends [never] 
+  ? A extends []
+    ? true
+    : false
+  : A extends [infer F, ...infer Rest]
+  ? F extends U
+    ? Exhaustive<Exclude<U, F>, Rest>
+    : false
+  : false;
+// ---cut---
+// Basic case
+type T1 = Exhaustive<'a'|'b'|'c', ['a','b','c']>
+//   ^?
+
+
+// Union and tuple have different order
+type T2 = Exhaustive<'a'|'b'|'c', ['b','c','a']>
+//   ^?
+
+
+// Duplicate element in array
+type T3 = Exhaustive<'a'|'b'|'c', ['a','a','b','c']>
+//   ^?
+
+
+// Shorter array
+type T4 = Exhaustive<'a'|'b'|'c', ['a','b']>
+//   ^?
+
+
+// Shorter tuple
+type T5 = Exhaustive<'a'|'b', ['a','b','c']>
+//   ^?
+```
+
+While I don't know what use case this might serve (the original poster didn't mention it), this was a fun challenge nonetheless. 

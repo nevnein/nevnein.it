@@ -1,0 +1,65 @@
+export const metadata = {
+  title: "Controllare se una tupla esaurisce un'unione in TypeScript",
+  description: "Come scrivere un tipo TypeScript che controlli che ogni membro di un'unione appaia esattamente una sola volta in una tupla",
+  tags: "typescript",
+  published: "2024-09-14",
+  lastModified: "2024-09-14",
+}
+
+Nei tempi morti tra un task e l'altro, solitamente girovago tra i vari server di discord dedicati a TypeScript e do una mano nei canali d'aiuto. Questa è una domanda interessante che mi è capitata tra le mani:
+
+> È possibile creare un tipo Exhaustive\<U,A\> che controlli che ogni elemento dell'array A sia costitutivo dell'unione U e ogni costitutivo di U compaia esattamente una volta in A?
+
+Ecco il mio tentativo:
+
+```ts twoslash
+type Exhaustive<U, A extends unknown[]> = [U] extends [never] 
+  ? A extends []
+    ? true
+    : false
+  : A extends [infer F, ...infer Rest]
+  ? F extends U
+    ? Exhaustive<Exclude<U, F>, Rest>
+    : false
+  : false;
+```
+
+Come suggerisce il nome, dobbiamo esaurire tutte le possibili coppie di elementi U-A, quindi le controlliamo tutte in maniera ricorsiva, rimuovendo le coppie già controllate ad ogni passo, fino a che l'array è vuoto e l'unione è never.
+
+```ts twoslash
+type Exhaustive<U, A extends unknown[]> = [U] extends [never] 
+  ? A extends []
+    ? true
+    : false
+  : A extends [infer F, ...infer Rest]
+  ? F extends U
+    ? Exhaustive<Exclude<U, F>, Rest>
+    : false
+  : false;
+// ---cut---
+// Basic case
+type T1 = Exhaustive<'a'|'b'|'c', ['a','b','c']>
+//   ^?
+
+
+// Union and tuple have different order
+type T2 = Exhaustive<'a'|'b'|'c', ['b','c','a']>
+//   ^?
+
+
+// Duplicate element in array
+type T3 = Exhaustive<'a'|'b'|'c', ['a','a','b','c']>
+//   ^?
+
+
+// Shorter array
+type T4 = Exhaustive<'a'|'b'|'c', ['a','b']>
+//   ^?
+
+
+// Shorter tuple
+type T5 = Exhaustive<'a'|'b', ['a','b','c']>
+//   ^?
+```
+
+Non so quale possa essere il caso d'uso di un tipo del genere (chi ha posto la domanda non l'ha specificato), ma è stata comunque una sfida divertente.

@@ -1,0 +1,7 @@
+.notesContainer {
+  max-width: calc(var(--main-width) + 4ch);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2ch minmax(0, var(--main-width)) 2ch;
+  grid-template-rows: auto;
+}

@@ -1,4 +1,4 @@
-import { Separator } from "@/components/Box";
+import { Separator } from "@/components/Separator";
 import Link from "next/link";
 
 export default function NotFoundPage() {

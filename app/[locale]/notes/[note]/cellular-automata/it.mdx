@@ -1,0 +1,232 @@
+import { AnimationAutomata, AnimationAutomataBig } from "./AnimationAutomata"
+
+export const metadata = {
+  title: "Animazioni dell'header scartate: Automa Cellulare",
+  description: "Un breve resoconto su come renderizzare un automa cellulare con i box-drawing characters in TypeScript e React",
+  tags: "typescript, react, creative-coding",
+  published: "2024-09-11",
+  lastModified: "2024-09-11",
+}
+
+Lavorando sulle animazioni nell'header della homepage di questo sito, ho esplorato e testato varie idee: non tutte ce l'hanno fatta per una ragione o per l'altra, ma mi sono divertito a implementarle e ho pensato di raccontarle comunque. Qui parlerò dell'automa cellulare.
+
+# ...Automa cellulare?
+
+Non appena ho cominciato cercare qualche animazione che fosse semplice ma bella graficamente, mi sono subito venuti in mente i [cellular automata](https://en.wikipedia.org/wiki/Cellular_automaton): facili da renderizzare (hanno solamente bisogno di celle bianche o nere) quindi una versione di solo caratteri sembrava fattibile, e nonostante le istruzioni per generarli siano molto semplici, possono produrre pattern intricati e molto affascinanti.
+
+Se non sapete cosa siano i CA e non avete voglia di leggere l'articolo di Wikipedia, si tratta fondamentalmente di una griglia in cui le celle possono essere piene o vuote, e lo stato di una singola cella è definito da delle regole legate allo stato delle tre celle al di sopra di essa. Un esempio di regola: se le tre celle sono piena-piena-vuota (001), allora la nuova cella sarà piena (1).
+
+```js
+-------------
+| 0 | 0 | 1 |
+-------------
+    | 1 |
+    -----
+```
+
+Queste regole sono totalmente arbitrarie, e se conoscete un minimo di combinatoria saprete che 3 celle con 2 possibili stati possono avere 2^3 combinazioni, quindi abbiamo bisogno solo di 8 regole per esaurire le possibilità, e ci sono 2^8 possibili set di regole. In ogni caso, dopo una breve ricerca, ho scelto il set di regole chiamato [rule 90](https://en.wikipedia.org/wiki/Rule_90).
+
+# In codice
+
+Rule 90 è molto semplice da spiegare, e ancor più semplice da codificare: se la cella a nordovest della cella interessata ha lo stesso stato di quella a nordest, lascia la cella vuota, altrimenti riempila (la cella direttamente a nord viene ignorata). In termini booleani, si tratta di un [exclusive or](https://en.wikipedia.org/wiki/Exclusive_or)(XOR): o uno o l'altro, ma non entrambi. In JavaScript, l'operatore bitwise XOR è rappresentato dal simbolo ^, ecco qualche esempio:
+
+```js
+0 ^ 1 // 1
+1 ^ 1 // 0
+0 ^ 0 // 0
+undefined ^ 1 // 1
+undefined ^ 0 // 0
+undefined ^ undefined // 0
+```
+
+Quindi supponendo che lo stato precedente dell'automa cellulare sia codificato in un array di 0(vuoto) e 1(pieno), l'n-esima posizione dell'array che conterrà il nuovo stato sarà `next[n] = prev[n - 1] ^ prev[n + 1]{:js}`. Chiunque abbia lavorato con degli array si accorgerà immediatamente di un problema nei casi limite: nella prima e ultima posizione non esisteranno n - 1 e n + 1, rispettivamente. Ci sono due soluzioni a questo problema.
+
+## La soluzione noiosa
+
+Assumiamo che accessi a indici non validi ritornino sempre 0 o 1. In JavaScript è particolarmente facile, poiché non esistono out of bounds exceptions e accedere ad un indice non valido ritornerà semplicemente undefined; e come abbiamo visto sopra, a livello di XOR 0 e undefined sono la stessa cosa.
+
+## La soluzione meno noiosa
+
+Assumiamo che la nostra griglia sia un toro, quindi quando raggiungiamo un estremo, semplicemente sbuchiamo su quello opposto. Questo significa ad esempio che l'elemento p[0 - 1] è di fatto l'ultimo.
+
+_Ça va sans dire_, ho deciso per la soluzione 2. Il primo caso limite si risolve subito con una relativamente nuova API degli array in JavaScript, il [metodo at()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at): quando utilizzato con indici negativi JS conterà all'indietro dall'ultimo elemento, il che è esattamente quello che vogliamo. Il secondo caso limite si risolve con un semplice modulo, visto che `p[length % length]{:js}` diventa `p[0]{:js}` ma in tutti gli altri casi `p[n % length]{:js}` rimane `p[n]{:js}`. Mettendo tutto insieme:
+
+```ts twoslash
+function applyRule90(p: (0 | 1)[])  {
+  return p.map((_, i) =>
+    (p.at(i - 1)! ^ p.at((i + 1) % p.length)!) as 0 | 1)
+}
+``` 
+
+Purtroppo, TypeScript non può sapere se la nostra chiamata ad at() rimarrà nei limiti dell'array, per cui il tipo di ritorno include sempre undefined. Qualcuno potrebbe dire che dovrebbe dipendere da se noUncheckedIndexedAccess sia vero o meno, ma così è la vita. Inoltre, il tipo di ritorno delle operazioni bitwise è sempre number, quindi dobbiamo rimediare alla perdita di informazione con un brutto cast.
+
+Una volta buttata giù la logica base, possiamo procedere con le altre istruzioni: Data una griglia (un array di array), prendi l'ultima riga, usala per generare la prossima e quindi appendi quest'ultima alla griglia. Se la griglia supera il numero massimo di righe che vogliamo renderizzare, rimuovi la prima riga.
+
+```ts
+function generateNextRow (
+  grid: (0 | 1)[][],
+  maxRows: number
+): (0 | 1)[][] {
+  const newGrid = grid.concat([
+    applyRule90(grid[grid.length - 1])
+  ]);
+
+  if (newGrid.length > maxRows) {
+    return newGrid.slice(1);
+  }
+
+  return newGrid;
+};
+``` 
+
+Occhio alle parentesi quadre intorno alla nostra chiamata ad applyRule90: concat() "spacchetta" i suoi argomenti, ma il nostro obiettivo è concatenare l'intero array, non solo i suoi valori.
+
+```ts
+[[0]].concat([1]); // [[0], 1] - Non quello che vogliamo
+[[0]].concat([[1]]); // [[0], [1]] - Ok
+```
+
+# Renderizzare in caratteri tipografici
+
+Il prossimo passo consiste nello scegliere quali caratteri potessero rendere le celle piene e vuote: Il carattere █ e lo spazio vuoto, la scelta più ovvia, non riuscivano a renderizzare il CA con un livello di dettaglio decente su una griglia 58x5, quindi avevo bisogno di aumentare in qualche modo la risoluzione. Fortunatamente, sono finito per caso sulla pagina di Wikipedia dei [box-drawing characters](https://en.wikipedia.org/wiki/Box-drawing_characters) e ho trovato questo bel set di caratteri:
+
+```js
+▖ ▗ ▘ ▙ ▚ ▛ ▜ ▝ ▞ ▟
+```
+
+Il set quadruplica la risoluzione, ora avevo solamente bisogno di associare ogni possibile sottogriglia di stati (2^4 combinazioni) al carattere corrispondente. Ho notato che ogni possibile combinazione rappresenta in maniera univoca un numero da 0 a 15 in base binaria (prendendo gli 0 e 1 in ordine di lettura).
+
+```js
+"▛" -> ▉▉ -> 1 1 -> 1 1 1 0 -> 14
+       ▉     1 0
+```
+
+Quindi, date 4 celle (0 o 1), possiamo combinarle in un numero con alcune semplici operazioni bitwise e usarlo come indice per accedere semplicemente ad un array contenente i nostri caratteri in ordine.
+
+```ts
+const BLOCKS = [
+  " ", // 0,0,0,0 -> 0
+  "▗", // 0,0,0,1 -> 1
+  "▖", // 0,0,1,0 -> 2
+  "▃", // 0,0,1,1 -> 3
+  "▝", // ecc.
+  "▐",
+  "▞",
+  "▟",
+  "▘",
+  "▚",
+  "▍",
+  "▙",
+  "▀",
+  "▜",
+  "▛",
+  "▉",
+]
+
+function subgridToChar(
+  a: 0 | 1,
+  b: 0 | 1,
+  c: 0 | 1,
+  d: 0 | 1
+): string {
+  return BLOCKS[(a << 3) | (b << 2) | (c << 1) | d];
+}
+```
+
+Qualora non foste familiari con le operazioni bitwise, l'[operatore left shift \<\<](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Left_shift) sposta la rappresentazione binaria verso sinistra per il valore specificato di posizioni, inserendo zeri nei posti liberati a destra.
+
+```js
+1 << 3 // 1   -> 1000, 8 in binario
+4 << 1 // 100 -> 1000, 8 in binario
+```
+
+L'[operatore bitwise OR |](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_OR) combina due rappresentazioni binarie, comparando ogni posizione con un "or".
+
+```js
+4 | 2 // 6
+// 4 in binario è 100, 2 è 10
+// 4    2    6
+// 1 or 0 -> 1
+// 1 or 1 -> 1
+// 0 or 0 -> 0
+```
+
+Ne segue che quello che stiamo di fatto facendo nel codice sopra è semplicemente mettere ogni cifra nella sua posizione, infine le "schiacciamo" insieme a formare un nuovo numero.
+
+```js
+// supponiamo a,b,c,d = 1
+(1 << 3) | (1 << 2) | (1 << 1) | 1 // 15
+// 1 << 3 -> 1000
+// 1 << 2 ->  100
+// 1 << 1 ->   10
+// 1      ->    1
+// 8 (1000) | 4 (100) | 2 (10) | 1 -> 1111 -> 15
+```
+
+Quindi, supponendo di avere la nostra griglia di stati vuoto/pieno, possiamo convertirla in una stringa completa in questo modo:
+
+```ts 
+const renderGridToString = (grid: (0 | 1)[][]) => {
+  let aggregate: string = "";
+
+  for (let i = 0; i < grid.length; i += 2) {
+    for (let j = 0; j < grid[i].length; j += 2) {
+      aggregate += subgridToChar(
+        grid[i][j],
+        grid[i][j + 1],
+        grid[i + 1]?.[j],
+        grid[i + 1]?.[j + 1]
+      );
+    }
+  }
+
+  return aggregate;
+};
+```
+
+Niente di speciale, l'unica cosa degna di nota è l'optional chaining nella seconda riga della griglia: è necessario in quanto le righe della nostra griglia potrebbero non essere pari(di fatto, all'inizio ci sarà una sola riga), quindi quella riga potrebbe non esistere.
+
+# Bringing it to life
+
+Ero finalmente pronto a portare tutto su React, avevo tutto quello che mi serviva, mancava solo l'animazione in sé. Ho deciso per un semplice setInterval ad aggiungere una nuova riga ogni n secondi, iniziando con una riga generata casualmente.
+
+```tsx
+const initialGrid = [generateRandomLine()];
+
+export const AnimationAutomata = () => {
+  const [grid, setGrid] = useState(initialGrid);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setGrid(generateNextRow(grid));
+    }, 200);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [grid]);
+
+  return (
+    <div
+      style={{
+        whiteSpace: "break-spaces",
+      }}
+    >
+      {renderGridToString(grid)}
+    </div>
+  );
+};
+```
+
+Considerato che la stringa può contenere spazi vuoti per renderizzare le celle [0,0,0,0], abbiamo bisogno di considerare il white-space collapsing; va quindi utilizzata la proprietà CSS white-space con il valore ["break-spaces"](https://developer.mozilla.org/en-US/docs/Web/CSS/white-space#break-spaces) per conservare gli spazi vuoti, non solo in sequenza ma anche in eventuali a capo.
+
+Purtroppo, il risultato su una griglia 58x5 è abbastanza deludente, che è il motivo per cui alla fine ho deciso di scartare l'idea. Potete vederlo qui:
+
+<AnimationAutomata />
+
+In ogni caso, anche se l'effetto su una griglia piccola non è granché, con una griglia più grande e qualche aggiustamento a line-height e velocità dell'animazione, prende veramente vita!
+
+<AnimationAutomataBig />
+
+Adoro il fatto che, alla fine, è solamente una grande stringa. 
+
+Grazie per aver letto fino a qui.

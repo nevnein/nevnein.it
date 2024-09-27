@@ -1,23 +1,26 @@
-.heading1 {
-  text-transform: uppercase;
+.heading {
   font-weight: bold;
-  margin-top: var(--line);
+  padding-top: var(--line);
+  grid-column: 2 / 3;
+}
+
+.smallHeading {
+  font-weight: bold;
+  grid-column: 2 / 3;
+}
+
+.cvHeading1 {
+  text-transform: uppercase;
   padding-top: var(--line);
 }
 
-.heading2 {
+.cvHeading2 {
   text-transform: uppercase;
-  font-weight: bold;
-  padding-top: var(--line);
-}
-
-.heading3 {
-  font-weight: bold;
-  margin-top: var(--line);
 }
 
 .paragraph {
   margin-bottom: var(--line);
+  grid-column: 2 / 3;
 }
 
 .paragraph + .heading1 {
@@ -32,6 +35,28 @@
   font-style: italic;
 }
 
-.externalLink:hover::after {
-  content: "‣";
+.code {
+  padding: var(--line) 1ch;
+}
+
+.blockquote {
+  grid-column: 2 / 3;
+  margin-bottom: calc(var(--line) * 1);
+  display: grid;
+  grid-template-columns: 1ch 1fr;
+  gap: 1ch;
+}
+
+.list {
+  grid-column: 2 / 3;
+  display: grid;
+  padding-left: 2ch;
+}
+
+.list li::marker {
+  display: block;
+}
+
+.list > .list {
+  grid-column: 2 / 3;
 }

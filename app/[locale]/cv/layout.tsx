@@ -1,4 +1,4 @@
-import { Box, Separator } from "@/components/Box";
+import { Separator } from "@/components/Separator";
 import { Link } from "@/navigation";
 import styles from "./layout.module.css";
 import { Metadata } from "next";
@@ -7,6 +7,9 @@ import { useTranslations } from "next-intl";
 import { PrintButton } from "@/components/PrintButton";
 import { getMetadata } from "@/app/utils/getMetadata";
 import { locales } from "@/config";
+import { MainContainer } from "@/components/MainContainer";
+import * as Grid from "@/components/Grid";
+import { BerkeleyMono } from "@/app/utils/BerkeleyMono";
 
 export async function generateMetadata({
   params: { locale },
@@ -33,92 +36,97 @@ export default function CvLayout({
   const t = useTranslations("CV");
 
   return (
-    <div className={styles.container}>
-      <Box width={90} height={4} type="single">
-        <h1
-          style={{
-            textTransform: "uppercase",
-            textAlign: "center",
-            fontWeight: "bold",
-            marginTop: "var(--line)",
-          }}
-        >
-          Adam Di Mario
-        </h1>
-        <p style={{ textAlign: "center" }}>Web Developer</p>
-      </Box>
-      <div className={styles.contacts}>
-        <a href="mailto:nev9adam@gmail">nev9adam@gmail.com</a>
-        <a href="tel:+393207117228">+39 320 7117 228</a>
-      </div>
-      <div className={`${styles.tocRail} print-hidden`}>
-        <div className={styles.toc}>
-          <h2>{t("toc")}</h2>
-          <Separator width={90} type="double" />
-          <ul className={styles.index}>
-            <li>
-              <Link href="#tl-dr">tl:dr;</Link>
-            </li>
-            <Separator width={90} type="single" />
-            <li>
-              <Link href="#esperienze-lavorative">{t("experience")}</Link>
-              <ul className={styles.index}>
-                <li>
-                  <a href="#work-at-modo">Lead frontend @MODO</a>
-                </li>
-                <li>
-                  <a href="#work-at-5a">Frontend @5A Design</a>
-                </li>
-                <li>
-                  <a href="#work-at-unisono">Junior @Unisono</a>
-                </li>
-                <li>
-                  <a href="#freelance">Freelance</a>
-                </li>
-              </ul>
-            </li>
-            <Separator width={90} type="single" />
-            <li>
-              <Link href="#skillset">{t("skillset")}</Link>
-              <ul className={styles.index}>
-                <li>
-                  <a href="#core">{t("core")}</a>
-                </li>
-                <li>
-                  <a href="#auxiliary">{t("auxiliary")}</a>
-                </li>
-                <li>
-                  <a href="#soft">{t("soft")}</a>
-                </li>
-              </ul>
-            </li>
-            <Separator width={90} type="single" />
-            <li>
-              <Link href="#others">{t("others")}</Link>
-              <ul className={styles.index}>
-                <li>
-                  <a href="#currently-studying">{t("studying")}</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-          <Separator width={90} type="single" />
-          <h2 style={{ marginTop: "var(--line)" }}>{t("utils")}</h2>
-          <Separator width={90} type="double" />
-          <ul className={styles.index}>
-            <li>
-              <PrintButton>{t("print")}</PrintButton>
-            </li>
-            <li>
-              <Link href="/cv" locale={params.locale === "en" ? "it" : "en"}>
-                {t("locale")}
-              </Link>
-            </li>
-          </ul>
+    <MainContainer>
+      <div className={`${styles.container} ${BerkeleyMono.className}`}>
+        <Grid.GridProvider>
+          <Grid.Content>
+            <div style={{ padding: "var(--line) 0" }}>
+              <h1
+                style={{
+                  textTransform: "uppercase",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                }}
+              >
+                Adam Di Mario
+              </h1>
+              <p style={{ textAlign: "center" }}>Web Developer</p>
+            </div>
+          </Grid.Content>
+        </Grid.GridProvider>
+        <div className={styles.contacts}>
+          <a href="mailto:nev9adam@gmail">nev9adam@gmail.com</a>
+          <a href="tel:+393207117228">+39 320 7117 228</a>
         </div>
-      </div>
+        <div className={`${styles.tocRail} print-hidden`}>
+          <div className={styles.toc}>
+            <h2>{t("toc")}</h2>
+            <Separator width={90} type="double" />
+            <ul className={styles.index}>
+              <li>
+                <Link href="#tl-dr">tl:dr;</Link>
+              </li>
+              <Separator width={90} type="single" />
+              <li>
+                <Link href="#esperienze-lavorative">{t("experience")}</Link>
+                <ul className={styles.index}>
+                  <li>
+                    <a href="#work-at-modo">Lead frontend @MODO</a>
+                  </li>
+                  <li>
+                    <a href="#work-at-5a">Frontend @5A Design</a>
+                  </li>
+                  <li>
+                    <a href="#work-at-unisono">Junior @Unisono</a>
+                  </li>
+                  <li>
+                    <a href="#freelance">Freelance</a>
+                  </li>
+                </ul>
+              </li>
+              <Separator width={90} type="single" />
+              <li>
+                <Link href="#skillset">{t("skillset")}</Link>
+                <ul className={styles.index}>
+                  <li>
+                    <a href="#core">{t("core")}</a>
+                  </li>
+                  <li>
+                    <a href="#auxiliary">{t("auxiliary")}</a>
+                  </li>
+                  <li>
+                    <a href="#soft">{t("soft")}</a>
+                  </li>
+                </ul>
+              </li>
+              <Separator width={90} type="single" />
+              <li>
+                <Link href="#others">{t("others")}</Link>
+                <ul className={styles.index}>
+                  <li>
+                    <a href="#currently-studying">{t("studying")}</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <Separator width={90} type="single" />
+            <h2 style={{ marginTop: "var(--line)" }}>{t("utils")}</h2>
+            <Separator width={90} type="double" />
+            <ul className={styles.index}>
+              <li>
+                <PrintButton>{t("print")}</PrintButton>
+              </li>
+              <li>
+                <Link href="/cv" locale={params.locale === "en" ? "it" : "en"}>
+                  {t("locale")}
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
 
-      {children}
-    </div>
+        {children}
+      </div>
+    </MainContainer>
   );
 }

@@ -1,0 +1,13 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1ch 1fr 1ch;
+  grid-template-rows: auto;
+  position: relative;
+}
+
+@media print {
+  .grid {
+    max-width: 50%;
+    margin: 0 auto;
+  }
+}

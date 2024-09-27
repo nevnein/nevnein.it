@@ -1,11 +1,14 @@
 import type { MDXComponents } from "mdx/types";
 import {
+  Blockquote,
+  Code,
   ExternalLink,
   H1,
   H2,
   H3,
   ListItem,
   Paragraph,
+  UnorderedList,
 } from "./components/Mdx";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
@@ -17,5 +20,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     p: Paragraph,
     a: ExternalLink,
     li: ListItem,
+    blockquote: Blockquote,
+    ul: UnorderedList,
+    pre: Code,
   };
 }

@@ -4,7 +4,6 @@
     "editor.wordWrapColumn": 75,
     "editor.acceptSuggestionOnCommitCharacter": false
   },
-  "i18n-ally.localesPaths": [
-    "messages"
-  ]
+  "i18n-ally.localesPaths": ["messages"],
+  "i18n-ally.enabledFrameworks": ["custom", "next-intl"]
 }

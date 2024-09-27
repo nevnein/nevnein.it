@@ -8,8 +8,18 @@
   overflow: hidden;
   white-space: nowrap;
   color: var(--decoration);
+  font-family: var(--font-code);
 }
 
 .bold {
   font-weight: bold;
+}
+
+a > .graphic {
+  color: var(--foreground);
+  display: inline;
+}
+
+a:hover > .graphic {
+  color: var(--background);
 }

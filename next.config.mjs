@@ -1,8 +1,34 @@
-import withMDX from "@next/mdx";
+import createMdx from "@next/mdx";
 import headingID from "remark-heading-id";
 import createNextIntlPlugin from "next-intl/plugin";
+import rehypeShiki from "@shikijs/rehype";
+import { rendererRich, transformerTwoslash } from "@shikijs/twoslash";
+import { readFileSync } from "fs";
+
+const nightOwlLight = JSON.parse(
+  readFileSync("app/utils/code-theme.json", "utf8")
+);
 
 const withNextIntl = createNextIntlPlugin();
+
+/** @type {import("@shikijs/rehype").RehypeShikiOptions} */
+const shikiOptions = {
+  theme: nightOwlLight,
+  transformers: [
+    transformerTwoslash({
+      explicitTrigger: true,
+      renderer: rendererRich(),
+    }),
+  ],
+  inline: "tailing-curly-colon",
+};
+
+const withMdx = createMdx({
+  options: {
+    remarkPlugins: [headingID],
+    rehypePlugins: [[rehypeShiki, shikiOptions]],
+  },
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -23,8 +49,4 @@ const nextConfig = {
   },
 };
 
-export default withMDX({
-  options: {
-    remarkPlugins: [headingID],
-  },
-})(withNextIntl(nextConfig));
+export default withMdx(withNextIntl(nextConfig));

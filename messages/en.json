@@ -7,7 +7,8 @@
     "greeting": "Hello, I'm Adam and this is my website.",
     "intro": "It will probably be a constant work in progress, I'll just keep adding stuff when/if I have time. Below are some useful links.",
     "locale": "Versione italiana",
-    "colophon": "This webiste uses technical cookies to persist your language preference. The typeface used on this website is Berkeley Mono by Berkeley Graphics ©. Every other work on nevnein.it © 2024 by Adam Di Mario is licensed under <license>CC BY-NC-SA 4.0</license>."
+    "notes": "Notes",
+    "colophon": "This website uses technical cookies to persist your language preference. The typeface used on this website is Berkeley Mono by Berkeley Graphics ©. Every other work on nevnein.it © 2024 by Adam Di Mario is licensed under <license>CC BY-NC-SA 4.0</license>."
   },
   "CV": {
     "meta": {
@@ -25,5 +26,17 @@
     "utils": "Utility",
     "print": "Print this page",
     "locale": "Versione italiana"
+  },
+  "Notes": {
+    "meta": {
+      "title": "Notes",
+      "description": "Collected notes about tech stuff from Adam Di Mario"
+    },
+    "notes": "Notes",
+    "intro": "Here I collect some notes about tech stuff, mostly things that I did or discover that deserve some space. Some are long articles, some are just few lines of code. It's not really a blog, more of a collection of things I'll likely come back to, and an excuse to excercise my poor writing skills.",
+    "disclaimer": "Stuff in tech changes rapidly, some of the content here might be outdated. Feel free to shoot me an email if you find any errors.",
+    "published": "Published on",
+    "lastUpdated": "Last updated on",
+    "topics": "Topics"
   }
 }
