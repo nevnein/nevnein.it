@@ -8,9 +8,11 @@ import { resolve } from "path";
 
 const getFonts = async (): Promise<ImageResponseOptions["fonts"]> => {
   const regular = await readFile(
-    resolve("app/fonts", "BerkeleyMono-Regular.ttf")
+    resolve(process.cwd(), "app/fonts", "BerkeleyMono-Regular.ttf")
   );
-  const bold = await readFile(resolve("app/fonts", "BerkeleyMono-Bold.ttf"));
+  const bold = await readFile(
+    resolve(process.cwd(), "app/fonts", "BerkeleyMono-Bold.ttf")
+  );
   return [
     {
       name: "Berkeley Mono",

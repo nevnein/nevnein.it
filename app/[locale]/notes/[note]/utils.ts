@@ -1,4 +1,5 @@
 import { readdir } from "fs/promises";
+import { resolve } from "path";
 
 type NoteMetadata = {
   title: string;
@@ -10,7 +11,9 @@ type NoteMetadata = {
 
 export const getAllNotes = async (locale: string) => {
   const slugs = (
-    await readdir("./app/[locale]/notes/[note]", { withFileTypes: true })
+    await readdir(resolve(process.cwd(), "app/[locale]/notes/[note]"), {
+      withFileTypes: true,
+    })
   ).filter((dirent) => dirent.isDirectory());
 
   const notes = await Promise.all(

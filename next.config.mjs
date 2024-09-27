@@ -4,9 +4,10 @@ import createNextIntlPlugin from "next-intl/plugin";
 import rehypeShiki from "@shikijs/rehype";
 import { rendererRich, transformerTwoslash } from "@shikijs/twoslash";
 import { readFileSync } from "fs";
+import path from "path";
 
 const nightOwlLight = JSON.parse(
-  readFileSync("app/utils/code-theme.json", "utf8")
+  readFileSync(path.resolve(process.cwd(), "app/utils/code-theme.json"), "utf8")
 );
 
 const withNextIntl = createNextIntlPlugin();
