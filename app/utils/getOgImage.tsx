@@ -1,13 +1,16 @@
 import { readFile } from "fs/promises";
 import { ImageResponse } from "next/og";
 import { ImageResponseOptions } from "next/server";
+import { resolve } from "path";
 
 // https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image#generate-images-using-code-js-ts-tsx
 // https://github.com/vercel/satori#css
 
 const getFonts = async (): Promise<ImageResponseOptions["fonts"]> => {
-  const regular = await readFile("public/BerkeleyMono-Regular.ttf");
-  const bold = await readFile("public/BerkeleyMono-Bold.ttf");
+  const regular = await readFile(
+    resolve("app/fonts", "BerkeleyMono-Regular.ttf")
+  );
+  const bold = await readFile(resolve("app/fonts", "BerkeleyMono-Bold.ttf"));
   return [
     {
       name: "Berkeley Mono",
