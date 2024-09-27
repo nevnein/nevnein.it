@@ -14,10 +14,12 @@ export const getAllNotes = async (locale: string) => {
     await readdir(resolve(process.cwd(), "app/[locale]/notes/[note]"), {
       withFileTypes: true,
     })
-  ).filter((dirent) => dirent.isDirectory());
+  )
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name);
 
   const notes = await Promise.all(
-    slugs.map(async ({ name }) => {
+    slugs.map(async (name) => {
       const { metadata } = await import(
         `@/app/[locale]/notes/[note]/${name}/${locale}.mdx`
       );

@@ -10,7 +10,7 @@ import { Metadata } from "next";
 export async function generateStaticParams() {
   const slugs = await getAllNotes("en");
   return slugs.flatMap(({ slug }) =>
-    locales.map((locale) => ({ slug, locale }))
+    locales.map((locale) => ({ note: slug, locale }))
   );
 }
 
@@ -44,7 +44,10 @@ export default async function Note({
   const t = await getTranslations("Notes");
 
   try {
-    const { metadata, default: Content } = await getNote(locale, note);
+    const Content = await import(
+      `@/app/[locale]/notes/[note]/${note}/${locale}.mdx`
+    );
+    const { metadata } = Content;
     return (
       <>
         <div
@@ -113,7 +116,7 @@ export default async function Note({
             </Grid.Content>
           </Grid.GridProvider>
         </div>
-        <Content />
+        <Content.default />
         <div
           style={{
             gridColumnStart: 2,
@@ -139,6 +142,7 @@ export default async function Note({
       </>
     );
   } catch (error) {
+    console.log(error);
     notFound();
   }
 }
