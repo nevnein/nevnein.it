@@ -3,32 +3,32 @@ import { ImageResponseOptions } from "next/server";
 
 // https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image#generate-images-using-code-js-ts-tsx
 // https://github.com/vercel/satori#css
-const getFonts = async (): Promise<ImageResponseOptions["fonts"]> => {
-  const regular = await fetch(
-    new URL("https://nevnein.it/BerkeleyMono-Regular.woff", import.meta.url)
-  );
-  const bold = await fetch(
-    new URL("https://nevnein.it/BerkeleyMono-Bold.woff", import.meta.url)
-  );
-  if (!regular.ok || !bold.ok) {
-    throw new Error("Failed to fetch fonts");
-  }
+// const getFonts = async (): Promise<ImageResponseOptions["fonts"]> => {
+//   const regular = await fetch(
+//     new URL("https://nevnein.it/BerkeleyMono-Regular.woff", import.meta.url)
+//   );
+//   const bold = await fetch(
+//     new URL("https://nevnein.it/BerkeleyMono-Bold.woff", import.meta.url)
+//   );
+//   if (!regular.ok || !bold.ok) {
+//     throw new Error("Failed to fetch fonts");
+//   }
 
-  return [
-    {
-      name: "Berkeley Mono",
-      data: await regular.arrayBuffer(),
-      style: "normal",
-      weight: 400,
-    },
-    {
-      name: "Berkeley Mono",
-      data: await bold.arrayBuffer(),
-      style: "normal",
-      weight: 600,
-    },
-  ];
-};
+//   return [
+//     {
+//       name: "Berkeley Mono",
+//       data: await regular.arrayBuffer(),
+//       style: "normal",
+//       weight: 400,
+//     },
+//     {
+//       name: "Berkeley Mono",
+//       data: await bold.arrayBuffer(),
+//       style: "normal",
+//       weight: 600,
+//     },
+//   ];
+// };
 
 export const getOgImage = async (
   title: string,
@@ -48,7 +48,8 @@ export const getOgImage = async (
         <div
           style={{
             margin: "2rem",
-            fontFamily: "Berkeley Mono",
+            fontFamily:
+              "ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace",
             display: "flex",
             flexDirection: "column",
             border: "2px solid #adb5bd",
@@ -102,7 +103,7 @@ export const getOgImage = async (
     {
       width: 1200,
       height: 630,
-      fonts: await getFonts(),
+      // fonts: await getFonts(),
     }
   );
 };
