@@ -1,7 +1,7 @@
 import { readdir } from "fs/promises";
 import { resolve } from "path";
 
-type NoteMetadata = {
+export type NoteMetadata = {
   title: string;
   description: string;
   tags: string;

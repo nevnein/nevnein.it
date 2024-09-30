@@ -78,18 +78,14 @@ export const AnimationAutomata = () => {
   }, [automataGrid]);
 
   return (
-    <div
+    <Wrapper
       style={{
-        whiteSpace: "break-spaces",
-        lineBreak: "anywhere",
-        marginBottom: "calc(var(--line) * 2)",
+        width: `${LINE_LENGTH}ch`,
         height: `calc(var(--line) * ${LINES})`,
-        gridColumn: `2 / 3`,
-        fontFamily: "var(--font-code)",
       }}
     >
       {renderGridToString(automataGrid)}
-    </div>
+    </Wrapper>
   );
 };
 
@@ -115,19 +111,44 @@ export const AnimationAutomataBig = () => {
   }, [automataGrid]);
 
   return (
-    <div
+    <Wrapper
       style={{
-        whiteSpace: "break-spaces",
-        lineBreak: "anywhere",
-        marginBottom: "calc(var(--line) * 2)",
+        width: `${LINE_LENGTH_BIG}ch`,
         height: `calc((var(--line) / 5) * ${LINES_BIG})`,
         fontSize: "0.5em",
         lineHeight: "1",
-        gridColumn: `2 / 3`,
-        fontFamily: "var(--font-code)",
       }}
     >
       {renderGridToString(automataGrid)}
+    </Wrapper>
+  );
+};
+
+const Wrapper = ({
+  style,
+  children,
+}: {
+  style: React.CSSProperties;
+  children: React.ReactNode;
+}) => {
+  return (
+    <div
+      style={{
+        gridColumn: "2 / 3",
+        overflow: "auto",
+      }}
+    >
+      <div
+        style={{
+          whiteSpace: "break-spaces",
+          lineBreak: "anywhere",
+          marginBottom: "calc(var(--line) * 2)",
+          fontFamily: "var(--font-code)",
+          ...style,
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { locales } from "@/config";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { getAllNotes } from "./[note]/utils";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import * as Grid from "@/components/Grid";
 import { CvH1 } from "@/components/Mdx";
 import { Metadata } from "next";
@@ -40,7 +40,7 @@ export default async function Cv({
             justifyContent: "flex-end",
           }}
         >
-          <Link href={`/${locale}`}>Home {`>`}</Link>
+          <Link href="/">Home {`>`}</Link>
         </nav>
         <CvH1>{t("notes")}</CvH1>
         <p style={{ marginBottom: "var(--line)" }}>{t("intro")}</p>
@@ -63,7 +63,7 @@ export default async function Cv({
                   marginBottom: "var(--line)",
                 }}
               >
-                <Link href={`/${locale}/notes/${slug}`}>{title}</Link>
+                <Link href={`/notes/${slug}`}>{title}</Link>
               </h1>
               <p style={{ marginBottom: "var(--line)" }}>{description}</p>
               <span>{tags}</span>

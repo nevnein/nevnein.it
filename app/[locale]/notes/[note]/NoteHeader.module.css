@@ -1,0 +1,25 @@
+.noteHeader {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  margin: calc(var(--line) * 1) 0;
+}
+
+.metaContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.metaContainer span {
+  flex: 1 100%;
+}
+
+@media screen and (min-width: 40rem) {
+  .metaContainer span {
+    flex: initial;
+  }
+}
+
+.metaContainer span:first-child {
+  font-style: italic;
+}
