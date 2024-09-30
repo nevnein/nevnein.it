@@ -138,6 +138,7 @@ const Wrapper = ({
     >
       <div
         style={{
+          width: "577.97px",
           whiteSpace: "break-spaces",
           lineBreak: "anywhere",
           marginBottom: "calc(var(--line) * 2)",
