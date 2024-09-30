@@ -80,7 +80,6 @@ export const AnimationAutomata = () => {
   return (
     <Wrapper
       style={{
-        width: `${LINE_LENGTH}ch`,
         height: `calc(var(--line) * ${LINES})`,
       }}
     >
@@ -113,7 +112,6 @@ export const AnimationAutomataBig = () => {
   return (
     <Wrapper
       style={{
-        width: `${LINE_LENGTH_BIG}ch`,
         height: `calc((var(--line) / 5) * ${LINES_BIG})`,
         fontSize: "0.5em",
         lineHeight: "1",
@@ -143,7 +141,6 @@ const Wrapper = ({
           whiteSpace: "break-spaces",
           lineBreak: "anywhere",
           marginBottom: "calc(var(--line) * 2)",
-          fontFamily: "var(--font-code)",
           ...style,
         }}
       >
