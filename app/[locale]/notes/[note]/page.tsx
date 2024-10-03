@@ -71,6 +71,7 @@ const NoteNavigation = ({ style }: { style?: React.CSSProperties }) => {
   return (
     <div
       style={{
+        ...style,
         gridColumnStart: 2,
         gridColumnEnd: 3,
       }}

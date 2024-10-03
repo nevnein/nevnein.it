@@ -33,7 +33,14 @@ export default function Notes({ params }: { params: { locale: string } }) {
         <HomeHeader />
         <p>{t("greeting")}</p>
         <p>{t("intro")}</p>
-        <nav style={{ display: "flex", gap: "6ch", flexWrap: "wrap" }}>
+        <nav
+          style={{
+            display: "flex",
+            columnGap: "6ch",
+            rowGap: "var(--line)",
+            flexWrap: "wrap",
+          }}
+        >
           <Link href="/cv">Curriculum Vitæ</Link>
           <Link href="/notes">{t("notes")}</Link>
           <Link href="/" locale={params.locale === "en" ? "it" : "en"}>
