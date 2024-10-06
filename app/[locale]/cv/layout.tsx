@@ -10,6 +10,7 @@ import { locales } from "@/config";
 import { MainContainer } from "@/components/MainContainer";
 import * as Grid from "@/components/Grid";
 import { BerkeleyMono } from "@/app/utils/BerkeleyMono";
+import clsx from "clsx";
 
 export async function generateMetadata({
   params: { locale },
@@ -37,7 +38,7 @@ export default function CvLayout({
 
   return (
     <MainContainer>
-      <div className={`${styles.container} ${BerkeleyMono.className}`}>
+      <div className={clsx(styles.container, BerkeleyMono.className)}>
         <Grid.GridProvider>
           <Grid.Content>
             <div style={{ padding: "var(--line) 0" }}>
@@ -58,7 +59,7 @@ export default function CvLayout({
           <a href="mailto:nev9adam@gmail">nev9adam@gmail.com</a>
           <a href="tel:+393207117228">+39 320 7117 228</a>
         </div>
-        <div className={`${styles.tocRail} print-hidden`}>
+        <div className={clsx(styles.tocRail, "print-hidden")}>
           <div className={styles.toc}>
             <h2>{t("toc")}</h2>
             <Separator width={90} type="double" />

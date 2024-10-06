@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import styles from "./Graphic.module.css";
 
 export const Graphic = ({
@@ -12,9 +13,11 @@ export const Graphic = ({
   return (
     <div
       aria-hidden="true"
-      className={`${styles.graphic} ${weight === "bold" ? styles.bold : ""} ${
-        className ?? ""
-      }`}
+      className={clsx(
+        styles.graphic,
+        weight === "bold" && styles.bold,
+        className
+      )}
     >
       {children}
     </div>

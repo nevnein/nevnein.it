@@ -7,5 +7,6 @@
 @media print {
   .mainContainer {
     padding-bottom: 0;
+    max-width: none;
   }
 }

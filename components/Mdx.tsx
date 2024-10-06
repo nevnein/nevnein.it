@@ -4,10 +4,9 @@ import styles from "./Mdx.module.css";
 import { Autofill } from "./Grid";
 import { BORDERS, isReactElement } from "./utils";
 import { deepMap } from "react-children-utilities";
-import { ReactElement } from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip";
-import { M } from "vitest/dist/chunks/reporters.C_zwCd4j.js";
+import clsx from "clsx";
 
 export const CvH1 = ({
   children,
@@ -19,7 +18,7 @@ export const CvH1 = ({
   return (
     <>
       <h2
-        className={`${styles.heading} ${styles.cvHeading1}`}
+        className={clsx(styles.heading, styles.cvHeading1)}
         id={
           id ? id : typeof children === "string" ? dashify(children) : undefined
         }
@@ -63,7 +62,7 @@ export const CvH2 = ({
   return (
     <>
       <h3
-        className={`${styles.heading} ${styles.cvHeading2}`}
+        className={clsx(styles.heading, styles.cvHeading2)}
         id={
           id ? id : typeof children === "string" ? dashify(children) : undefined
         }

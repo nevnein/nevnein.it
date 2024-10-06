@@ -1,4 +1,3 @@
-import { Separator } from "@/components/Separator";
 import { HomeHeader } from "@/components/HomeHeader/HomeHeader";
 import { MainContainer } from "@/components/MainContainer";
 import { locales } from "@/config";
@@ -27,7 +26,6 @@ export default function Notes({ params }: { params: { locale: string } }) {
           alignItems: "center",
           justifyContent: "center",
           gap: "var(--line)",
-          minHeight: "100dvh",
         }}
       >
         <HomeHeader />
@@ -47,22 +45,6 @@ export default function Notes({ params }: { params: { locale: string } }) {
             {t("locale")}
           </Link>
         </nav>
-        <Separator width={20} type="double" />
-        <footer>
-          <p>
-            {t.rich("colophon", {
-              license: (chunks) => (
-                <a
-                  target="_blank"
-                  rel="license noopener noreferrer"
-                  href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
-                >
-                  {chunks}
-                </a>
-              ),
-            })}
-          </p>
-        </footer>
       </div>
     </MainContainer>
   );

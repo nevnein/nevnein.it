@@ -1,5 +1,5 @@
 .container {
-  padding-bottom: calc(var(--line) * 20);
+  padding-bottom: calc(var(--line) * 10);
 }
 
 @media print {

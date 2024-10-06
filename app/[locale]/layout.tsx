@@ -3,7 +3,8 @@ import { getMetadata } from "../utils/getMetadata";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { locales } from "@/config";
 import { getMessages, unstable_setRequestLocale } from "next-intl/server";
-import { NextIntlClientProvider } from "next-intl";
+import { NextIntlClientProvider, useTranslations } from "next-intl";
+import { Footer } from "@/components/Footer";
 
 export async function generateMetadata({
   params: { locale },
@@ -11,14 +12,7 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   const basicMetadata = await getMetadata(locale, "HomePage");
-  return locale === "it"
-    ? {
-        ...basicMetadata,
-        alternates: {
-          canonical: "https://www.nevnein.it",
-        },
-      }
-    : basicMetadata;
+  return basicMetadata;
 }
 
 export async function generateStaticParams() {
@@ -49,6 +43,7 @@ export default async function RootLayout({
         ></div>
         <NextIntlClientProvider messages={messages}>
           {children}
+          <Footer locale={locale} />
         </NextIntlClientProvider>
       </body>
     </html>
