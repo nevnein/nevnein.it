@@ -15,7 +15,7 @@ export const Footer = ({ locale }: { locale: string }) => {
     <MainContainer>
       <div
         className={clsx(
-          styles.container,
+          styles.footerContainer,
           BerkeleyMono.className,
           "print-hidden"
         )}

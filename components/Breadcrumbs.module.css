@@ -1,0 +1,27 @@
+.breadcrumbs {
+  display: flex;
+  gap: 1ch;
+  list-style: none;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 40rem) {
+  .breadcrumbs {
+    flex-direction: row;
+  }
+}
+
+/* .breadcrumbs li:not(:last-child) {
+  flex-shrink: 0;
+} */
+
+.breadcrumbs li:last-child {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.separator {
+  margin-right: 1ch;
+  text-decoration: none;
+}

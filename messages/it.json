@@ -30,11 +30,11 @@
   "Notes": {
     "meta": {
       "title": "Note",
-      "description": "Raccolta di note su roba tech, di Adam Di Mario"
+      "description": "Raccolta di note su roba web dev, di Adam Di Mario"
     },
     "notes": "Note",
-    "intro": "Qui raccolgo alcune note su roba tech, per la maggior parte cose che ho fatto o scoperto meritevoli di un po' di spazio. Alcune sono lunghi articoli, altre solo poche righe di codice. Non è un vero blog, più una raccolta di cose che probabilmente riguarderò in futuro, e una scusa per esercitare le mie scarse capacità di scrittura.",
-    "disclaimer": "Le cose nell'ambito tech cambiano in fretta, qualche contenuto potrebbe essere non più rilevante. Sentitevi liberi di mandarmi una mail doveste trovare qualche errore.",
+    "intro": "Qui raccolgo alcune note su roba web dev, per la maggior parte cose che ho fatto o scoperto meritevoli di un po' di spazio. Alcune sono lunghi articoli, altre solo poche righe di codice. Non è un vero blog, più una raccolta di cose che probabilmente riguarderò in futuro, e una scusa per esercitare le mie scarse capacità di scrittura.",
+    "disclaimer": "Le cose nell'ambito web dev cambiano costantemente, qualche contenuto potrebbe essere non più rilevante. Sentitevi liberi di mandarmi una mail doveste trovare qualche errore.",
     "published": "Pubblicato il",
     "lastUpdated": "Aggiornato il",
     "topics": "Argomenti"

@@ -6,6 +6,7 @@ import { Graphic } from "@/components/Graphic";
 import { Link } from "@/navigation";
 import { NoteHeader } from "./NoteHeader";
 import { Metadata } from "next";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export async function generateStaticParams() {
   const slugs = await getAllNotes("en");
@@ -50,15 +51,16 @@ export default async function Note({
     const { metadata } = Content;
     return (
       <>
-        <NoteNavigation />
+        <div style={{ gridColumnStart: 2 }}>
+          <Breadcrumbs
+            links={[
+              { label: t("notes"), link: "/notes" },
+              { label: metadata.title, link: `/notes/${note}` },
+            ]}
+          />
+        </div>
         <NoteHeader metadata={metadata} locale={locale} />
         <Content.default />
-        <NoteNavigation
-          style={{
-            marginTop: "calc(var(--line) * 4)",
-            marginBottom: "calc(var(--line) * 2)",
-          }}
-        />
       </>
     );
   } catch (error) {
@@ -66,29 +68,3 @@ export default async function Note({
     notFound();
   }
 }
-
-const NoteNavigation = ({ style }: { style?: React.CSSProperties }) => {
-  return (
-    <div
-      style={{
-        ...style,
-        gridColumnStart: 2,
-        gridColumnEnd: 3,
-      }}
-    >
-      <nav
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <Link href="/notes">
-          <Graphic>{`<`}</Graphic> Notes
-        </Link>
-        <Link href="/">
-          Home <Graphic>{`>`}</Graphic>
-        </Link>
-      </nav>
-    </div>
-  );
-};

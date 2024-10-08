@@ -6,6 +6,7 @@ import * as Grid from "@/components/Grid";
 import { CvH1 } from "@/components/Mdx";
 import { Metadata } from "next";
 import { getMetadata } from "@/app/utils/getMetadata";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -34,14 +35,7 @@ export default async function Cv({
   return (
     <>
       <div style={{ gridColumnStart: 2 }}>
-        <nav
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
-        >
-          <Link href="/">Home {`>`}</Link>
-        </nav>
+        <Breadcrumbs links={[{ label: t("notes"), link: "/notes" }]} />
         <CvH1>{t("notes")}</CvH1>
         <p style={{ marginBottom: "var(--line)" }}>{t("intro")}</p>
         <p>{t("disclaimer")}</p>

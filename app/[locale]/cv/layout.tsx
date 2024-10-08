@@ -11,6 +11,7 @@ import { MainContainer } from "@/components/MainContainer";
 import * as Grid from "@/components/Grid";
 import { BerkeleyMono } from "@/app/utils/BerkeleyMono";
 import clsx from "clsx";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export async function generateMetadata({
   params: { locale },
@@ -39,6 +40,7 @@ export default function CvLayout({
   return (
     <MainContainer>
       <div className={clsx(styles.container, BerkeleyMono.className)}>
+        <Breadcrumbs links={[{ label: "Curriculum Vitæ", link: "/cv" }]} />
         <Grid.GridProvider>
           <Grid.Content>
             <div style={{ padding: "var(--line) 0" }}>

@@ -30,11 +30,11 @@
   "Notes": {
     "meta": {
       "title": "Notes",
-      "description": "Collected notes about tech stuff from Adam Di Mario"
+      "description": "Collected notes about web dev stuff from Adam Di Mario"
     },
     "notes": "Notes",
-    "intro": "Here I collect some notes about tech stuff, mostly things that I did or discover that deserve some space. Some are long articles, some are just few lines of code. It's not really a blog, more of a collection of things I'll likely come back to, and an excuse to excercise my poor writing skills.",
-    "disclaimer": "Stuff in tech changes rapidly, some of the content here might be outdated. Feel free to shoot me an email if you find any errors.",
+    "intro": "Here I collect some notes about web dev stuff, mostly things that I did or discover that deserve some space. Some are long articles, some are just few lines of code. It's not really a blog, more of a collection of things I'll likely come back to, and an excuse to excercise my poor writing skills.",
+    "disclaimer": "Things in web dev change constantly, some of the content here might be outdated. Feel free to shoot me an email if you find any errors.",
     "published": "Published on",
     "lastUpdated": "Last updated on",
     "topics": "Topics"
