@@ -5,6 +5,7 @@ import { locales } from "@/config";
 import { getMessages, unstable_setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider, useTranslations } from "next-intl";
 import { Footer } from "@/components/Footer";
+import { BerkeleyMono } from "../utils/BerkeleyMono";
 
 export async function generateMetadata({
   params: { locale },
@@ -35,7 +36,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <SpeedInsights />
-      <body style={{ position: "relative" }}>
+      <body style={{ position: "relative" }} className={BerkeleyMono.variable}>
         <div
           aria-hidden
           style={{ width: "1ch", height: "var(--line)" }}

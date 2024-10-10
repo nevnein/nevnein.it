@@ -2,7 +2,6 @@
 import { useContext, useEffect, useState } from "react";
 import { MousePositionContext } from "./MousePositionContext";
 import { LINES, LINE_LENGTH, noise } from "./utils";
-import { BerkeleyMono } from "@/app/utils/BerkeleyMono";
 
 const CHARS = [
   " ",
@@ -53,10 +52,7 @@ export const AnimationNoise = () => {
   });
 
   return (
-    <div
-      className={BerkeleyMono.className}
-      style={{ lineBreak: "anywhere", overflow: "hidden", height: "100%" }}
-    >
+    <div style={{ lineBreak: "anywhere", overflow: "hidden", height: "100%" }}>
       {Result.join("")}
     </div>
   );

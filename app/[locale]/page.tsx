@@ -4,7 +4,6 @@ import { locales } from "@/config";
 import { Link } from "@/navigation";
 import { useTranslations } from "next-intl";
 import { unstable_setRequestLocale } from "next-intl/server";
-import { BerkeleyMono } from "../utils/BerkeleyMono";
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -19,7 +18,6 @@ export default function Notes({ params }: { params: { locale: string } }) {
   return (
     <MainContainer>
       <div
-        className={BerkeleyMono.className}
         style={{
           display: "flex",
           flexDirection: "column",

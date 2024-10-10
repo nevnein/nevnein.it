@@ -17,9 +17,6 @@
   --decoration: rgba(173 181 189 / 1);
   --blue-rgb: 38 72 225;
   --blue: rgb(var(--blue-rgb));
-  --font-code: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
-    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
-    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -24,4 +24,5 @@ export const BerkeleyMono = localFont({
     },
   ],
   display: "swap",
+  variable: "--font-code",
 });

@@ -168,12 +168,21 @@ export const AnimationMaze = () => {
 
   return (
     <div
+      // style={{
+      //   lineBreak: "anywhere",
+      //   margin: "calc(var(--line) * -1) -2ch",
+      // }}
       style={{
-        lineBreak: "anywhere",
+        display: "grid",
         margin: "calc(var(--line) * -1) -2ch",
+        gridTemplate: `repeat(${LINES}, 1fr) / repeat(${LINE_LENGTH + 4}, 1ch)`,
       }}
     >
-      {grid.flatMap((line) => line.map((el) => SINGLE_LINE_CHARS[el]))}
+      {grid.flatMap((line, y) =>
+        line.map((el, i) => (
+          <span key={`${y}-${i}-${el}`}>{SINGLE_LINE_CHARS[el]}</span>
+        ))
+      )}
     </div>
   );
 };

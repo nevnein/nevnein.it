@@ -1,7 +1,6 @@
 import { useTranslations } from "next-intl";
 import { unstable_setRequestLocale } from "next-intl/server";
 import { MainContainer } from "./MainContainer";
-import { BerkeleyMono } from "@/app/utils/BerkeleyMono";
 import { Separator } from "./Separator";
 import styles from "./Footer.module.css";
 import clsx from "clsx";
@@ -13,13 +12,7 @@ export const Footer = ({ locale }: { locale: string }) => {
 
   return (
     <MainContainer>
-      <div
-        className={clsx(
-          styles.footerContainer,
-          BerkeleyMono.className,
-          "print-hidden"
-        )}
-      >
+      <div className={clsx(styles.footerContainer, "print-hidden")}>
         <Separator width={20} type="double" />
         <footer>
           <p>

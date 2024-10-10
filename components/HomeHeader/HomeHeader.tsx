@@ -1,4 +1,3 @@
-import { BerkeleyMono } from "@/app/utils/BerkeleyMono";
 import { Canvas } from "./Canvas";
 import style from "./HomeHeader.module.css";
 import { LINES } from "./utils";
@@ -23,7 +22,6 @@ export const HomeHeader = () => {
                 backgroundColor: "var(--background)",
                 position: "relative",
               }}
-              className={BerkeleyMono.className}
             >
               NevNein
             </h1>

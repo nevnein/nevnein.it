@@ -2,7 +2,6 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { LINES } from "./utils";
 import { MousePositionContext } from "./MousePositionContext";
-import { BerkeleyMono } from "@/app/utils/BerkeleyMono";
 
 export const AnimationInspector = () => {
   const [x, y] = useContext(MousePositionContext);
@@ -34,7 +33,6 @@ export const AnimationInspector = () => {
   return (
     <>
       <pre
-        className={BerkeleyMono.className}
         style={{
           whiteSpace: "pre-wrap",
           lineBreak: "anywhere",
