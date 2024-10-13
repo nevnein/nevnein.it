@@ -19,7 +19,16 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
-  return getMetadata(locale, "Notes");
+  const basicMetadata = await getMetadata(locale, "Notes");
+  return {
+    ...basicMetadata,
+    alternates: {
+      canonical: `https://nevnein.it/${locale}/notes`,
+      languages: Object.fromEntries(
+        locales.map((locale) => [locale, `https://nevnein.it/${locale}/notes`])
+      ),
+    },
+  };
 }
 
 export default async function Cv({

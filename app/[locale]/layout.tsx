@@ -6,14 +6,21 @@ import { getMessages, unstable_setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider, useTranslations } from "next-intl";
 import { Footer } from "@/components/Footer";
 import { BerkeleyMono } from "../utils/BerkeleyMono";
-
 export async function generateMetadata({
   params: { locale },
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
   const basicMetadata = await getMetadata(locale, "HomePage");
-  return basicMetadata;
+  return {
+    ...basicMetadata,
+    alternates: {
+      canonical: `https://nevnein.it/${locale}`,
+      languages: Object.fromEntries(
+        locales.map((locale) => [locale, `https://nevnein.it/${locale}`])
+      ),
+    },
+  };
 }
 
 export async function generateStaticParams() {

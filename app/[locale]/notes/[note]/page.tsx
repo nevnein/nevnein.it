@@ -33,6 +33,15 @@ export async function generateMetadata({
       description: metadata.description,
       url: `https://nevnein.it/${locale}/notes/${note}`,
     },
+    alternates: {
+      canonical: `https://nevnein.it/${locale}/notes/${note}`,
+      languages: Object.fromEntries(
+        locales.map((locale) => [
+          locale,
+          `https://nevnein.it/${locale}/notes/${note}`,
+        ])
+      ),
+    },
   };
 }
 
