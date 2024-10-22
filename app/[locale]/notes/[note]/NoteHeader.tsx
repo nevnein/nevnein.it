@@ -1,5 +1,5 @@
 import * as Grid from "@/components/Grid";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { NoteMetadata } from "./utils";
 import styles from "./NoteHeader.module.css";
 
@@ -10,7 +10,7 @@ export const NoteHeader = async ({
   metadata: NoteMetadata;
   locale: string;
 }) => {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const t = await getTranslations("Notes");
 
   return (

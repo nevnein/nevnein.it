@@ -1,12 +1,12 @@
 import { useTranslations } from "next-intl";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { MainContainer } from "./MainContainer";
 import { Separator } from "./Separator";
 import styles from "./Footer.module.css";
 import clsx from "clsx";
 
 export const Footer = ({ locale }: { locale: string }) => {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
 
   const t = useTranslations("HomePage");
 

@@ -3,7 +3,7 @@ import { Separator } from "@/components/Separator";
 import { Link } from "@/navigation";
 import styles from "./layout.module.css";
 import { Metadata } from "next";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import { PrintButton } from "@/components/PrintButton";
 import { getMetadata } from "@/app/utils/getMetadata";
@@ -47,7 +47,7 @@ export default function CvLayout(
 
   const { children } = props;
 
-  unstable_setRequestLocale(params.locale);
+  setRequestLocale(params.locale);
   const t = useTranslations("CV");
 
   return (

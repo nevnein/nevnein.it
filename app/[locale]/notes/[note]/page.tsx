@@ -1,5 +1,5 @@
 import { locales } from "@/config";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getAllNotes, getNote } from "./utils";
 import { Graphic } from "@/components/Graphic";
@@ -53,7 +53,7 @@ export default async function Note(props: {
 
   const { locale, note } = params;
 
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const t = await getTranslations("Notes");
 
   try {

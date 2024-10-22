@@ -7,7 +7,7 @@ import { deepMap } from "react-children-utilities";
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip";
 import clsx from "clsx";
-import { isValidElement } from "react";
+import React, { isValidElement } from "react";
 
 export const CvH1 = ({
   children,
@@ -15,7 +15,7 @@ export const CvH1 = ({
 }: {
   children?: React.ReactNode;
   id?: string;
-}) => {
+}): React.ReactElement => {
   return (
     <>
       <h2
@@ -37,7 +37,7 @@ export const H1 = ({
 }: {
   children?: React.ReactNode;
   id?: string;
-}) => {
+}): React.ReactElement => {
   return (
     <>
       <h2

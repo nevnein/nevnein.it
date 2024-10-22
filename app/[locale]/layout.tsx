@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getMetadata } from "../utils/getMetadata";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { locales } from "@/config";
-import { getMessages, unstable_setRequestLocale } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider, useTranslations } from "next-intl";
 import { Footer } from "@/components/Footer";
 import { BerkeleyMono } from "../utils/BerkeleyMono";
@@ -42,7 +42,7 @@ export default async function RootLayout(
 
   const { children } = props;
 
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
 
   const messages = await getMessages();
 

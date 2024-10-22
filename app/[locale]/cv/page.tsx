@@ -1,6 +1,6 @@
 import { CvH1, CvH2, CvH3 } from "@/components/Mdx";
 import { locales } from "@/config";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -15,18 +15,14 @@ const overrideComponents = {
   h3: CvH3,
 };
 
-export default async function Cv(
-  props: {
-    params: Promise<{ locale: string }>;
-  }
-) {
+export default async function Cv(props: {
+  params: Promise<{ locale: string }>;
+}) {
   const params = await props.params;
 
-  const {
-    locale
-  } = params;
+  const { locale } = params;
 
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
 
   try {
     const { default: Content } = await import(`./${locale}.mdx`);

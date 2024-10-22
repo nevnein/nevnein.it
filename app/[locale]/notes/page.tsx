@@ -1,5 +1,5 @@
 import { locales } from "@/config";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getAllNotes } from "./[note]/utils";
 import { Link } from "@/navigation";
 import * as Grid from "@/components/Grid";
@@ -39,7 +39,7 @@ export default async function Cv(props: {
 
   const { locale } = params;
 
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const t = await getTranslations("Notes");
 
   const notes = await getAllNotes(locale);

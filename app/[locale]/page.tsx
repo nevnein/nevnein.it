@@ -4,7 +4,7 @@ import { MainContainer } from "@/components/MainContainer";
 import { locales } from "@/config";
 import { Link } from "@/navigation";
 import { useTranslations } from "next-intl";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -14,7 +14,7 @@ export const dynamicParams = false;
 
 export default function Notes(props: { params: Promise<{ locale: string }> }) {
   const params = use(props.params);
-  unstable_setRequestLocale(params.locale);
+  setRequestLocale(params.locale);
   const t = useTranslations("HomePage");
 
   return (
