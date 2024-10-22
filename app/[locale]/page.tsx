@@ -1,3 +1,4 @@
+import { use } from "react";
 import { HomeHeader } from "@/components/HomeHeader/HomeHeader";
 import { MainContainer } from "@/components/MainContainer";
 import { locales } from "@/config";
@@ -11,7 +12,8 @@ export async function generateStaticParams() {
 
 export const dynamicParams = false;
 
-export default function Notes({ params }: { params: { locale: string } }) {
+export default function Notes(props: { params: Promise<{ locale: string }> }) {
+  const params = use(props.params);
   unstable_setRequestLocale(params.locale);
   const t = useTranslations("HomePage");
 

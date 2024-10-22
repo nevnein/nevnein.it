@@ -6,16 +6,17 @@ import { getMessages, unstable_setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider, useTranslations } from "next-intl";
 import { Footer } from "@/components/Footer";
 import { BerkeleyMono } from "../utils/BerkeleyMono";
-export async function generateMetadata({
-  params: { locale },
-}: {
-  params: { locale: string };
+export async function generateMetadata(props: {
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
+  const params = await props.params;
+
+  const { locale } = params;
+
   const basicMetadata = await getMetadata(locale, "HomePage");
   return {
     ...basicMetadata,
     alternates: {
-      canonical: `https://nevnein.it/${locale}`,
       languages: Object.fromEntries(
         locales.map((locale) => [locale, `https://nevnein.it/${locale}`])
       ),
@@ -29,13 +30,18 @@ export async function generateStaticParams() {
 
 export const dynamicParams = false;
 
-export default async function RootLayout({
-  children,
-  params: { locale },
-}: Readonly<{
-  children: React.ReactNode;
-  params: { locale: string };
-}>) {
+export default async function RootLayout(
+  props: Readonly<{
+    children: React.ReactNode;
+    params: { locale: string };
+  }>
+) {
+  const params = await props.params;
+
+  const { locale } = params;
+
+  const { children } = props;
+
   unstable_setRequestLocale(locale);
 
   const messages = await getMessages();

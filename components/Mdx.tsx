@@ -2,11 +2,12 @@ import { Separator } from "./Separator";
 import dashify from "dashify";
 import styles from "./Mdx.module.css";
 import { Autofill } from "./Grid";
-import { BORDERS, isReactElement } from "./utils";
+import { BORDERS } from "./utils";
 import { deepMap } from "react-children-utilities";
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip";
 import clsx from "clsx";
+import { isValidElement } from "react";
 
 export const CvH1 = ({
   children,
@@ -137,7 +138,9 @@ export const Code = ({
   style?: React.CSSProperties;
 }) => {
   const newChildren = deepMap(children, (child) => {
-    if (isReactElement(child)) {
+    if (
+      isValidElement<{ className: string; children: React.ReactNode[] }>(child)
+    ) {
       if (child.type === "span" && child.props.className === "twoslash-hover") {
         const newChild = jsxs(Tooltip, {
           className: child.props.className,

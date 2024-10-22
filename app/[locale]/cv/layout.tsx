@@ -1,3 +1,4 @@
+import { use } from "react";
 import { Separator } from "@/components/Separator";
 import { Link } from "@/navigation";
 import styles from "./layout.module.css";
@@ -12,16 +13,17 @@ import * as Grid from "@/components/Grid";
 import clsx from "clsx";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
-export async function generateMetadata({
-  params: { locale },
-}: {
-  params: { locale: string };
+export async function generateMetadata(props: {
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
+  const params = await props.params;
+
+  const { locale } = params;
+
   const basicMetadata = await getMetadata(locale, "CV");
   return {
     ...basicMetadata,
     alternates: {
-      canonical: `https://nevnein.it/${locale}/cv`,
       languages: Object.fromEntries(
         locales.map((locale) => [locale, `https://nevnein.it/${locale}/cv`])
       ),
@@ -35,13 +37,16 @@ export async function generateStaticParams() {
 
 export const dynamicParams = false;
 
-export default function CvLayout({
-  children,
-  params,
-}: Readonly<{
-  children: React.ReactNode;
-  params: { locale: string };
-}>) {
+export default function CvLayout(
+  props: Readonly<{
+    children: React.ReactNode;
+    params: Promise<{ locale: string }>;
+  }>
+) {
+  const params = use(props.params);
+
+  const { children } = props;
+
   unstable_setRequestLocale(params.locale);
   const t = useTranslations("CV");
 

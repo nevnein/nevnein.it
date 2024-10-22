@@ -14,16 +14,17 @@ export async function generateStaticParams() {
 
 export const dynamicParams = false;
 
-export async function generateMetadata({
-  params: { locale },
-}: {
-  params: { locale: string };
+export async function generateMetadata(props: {
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
+  const params = await props.params;
+
+  const { locale } = params;
+
   const basicMetadata = await getMetadata(locale, "Notes");
   return {
     ...basicMetadata,
     alternates: {
-      canonical: `https://nevnein.it/${locale}/notes`,
       languages: Object.fromEntries(
         locales.map((locale) => [locale, `https://nevnein.it/${locale}/notes`])
       ),
@@ -31,11 +32,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function Cv({
-  params: { locale },
-}: {
-  params: { locale: string };
+export default async function Cv(props: {
+  params: Promise<{ locale: string }>;
 }) {
+  const params = await props.params;
+
+  const { locale } = params;
+
   unstable_setRequestLocale(locale);
   const t = await getTranslations("Notes");
 

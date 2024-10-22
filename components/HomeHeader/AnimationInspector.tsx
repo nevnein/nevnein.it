@@ -5,7 +5,7 @@ import { MousePositionContext } from "./MousePositionContext";
 
 export const AnimationInspector = () => {
   const [x, y] = useContext(MousePositionContext);
-  const rAFref = useRef<null | number>();
+  const rAFref = useRef<number>(undefined);
   const times = useRef<number[]>([]);
   const [fps, setFps] = useState(0);
 

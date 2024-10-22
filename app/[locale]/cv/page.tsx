@@ -15,11 +15,17 @@ const overrideComponents = {
   h3: CvH3,
 };
 
-export default async function Cv({
-  params: { locale },
-}: {
-  params: { locale: string };
-}) {
+export default async function Cv(
+  props: {
+    params: Promise<{ locale: string }>;
+  }
+) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   unstable_setRequestLocale(locale);
 
   try {

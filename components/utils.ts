@@ -1,5 +1,3 @@
-import { ReactElement, ReactNode } from "react";
-
 export const BORDERS = {
   single: {
     h: "─",
@@ -88,7 +86,3 @@ export const BREAKS = {
     },
   },
 } as const;
-
-export const isReactElement = (node: ReactNode): node is ReactElement => {
-  return typeof node === "object" && node !== null && "props" in node;
-};

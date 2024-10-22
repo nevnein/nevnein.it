@@ -17,11 +17,13 @@ export async function generateStaticParams() {
 
 export const dynamicParams = false;
 
-export async function generateMetadata({
-  params: { locale, note },
-}: {
-  params: { locale: string; note: string };
+export async function generateMetadata(props: {
+  params: Promise<{ locale: string; note: string }>;
 }): Promise<Metadata> {
+  const params = await props.params;
+
+  const { locale, note } = params;
+
   const { metadata } = await getNote(locale, note);
   return {
     title: metadata.title,
@@ -34,7 +36,6 @@ export async function generateMetadata({
       url: `https://nevnein.it/${locale}/notes/${note}`,
     },
     alternates: {
-      canonical: `https://nevnein.it/${locale}/notes/${note}`,
       languages: Object.fromEntries(
         locales.map((locale) => [
           locale,
@@ -45,11 +46,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function Note({
-  params: { locale, note },
-}: {
-  params: { locale: string; note: string };
+export default async function Note(props: {
+  params: Promise<{ locale: string; note: string }>;
 }) {
+  const params = await props.params;
+
+  const { locale, note } = params;
+
   unstable_setRequestLocale(locale);
   const t = await getTranslations("Notes");
 

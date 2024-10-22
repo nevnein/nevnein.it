@@ -1,6 +1,8 @@
 import { readdir } from "fs/promises";
 import { resolve } from "path";
 
+import type { JSX } from "react";
+
 export type NoteMetadata = {
   title: string;
   description: string;
