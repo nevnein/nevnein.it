@@ -6,6 +6,8 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider, useTranslations } from "next-intl";
 import { Footer } from "@/components/Footer";
 import { BerkeleyMono } from "../utils/BerkeleyMono";
+import "./globals.css";
+
 export async function generateMetadata(props: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
@@ -33,7 +35,7 @@ export const dynamicParams = false;
 export default async function RootLayout(
   props: Readonly<{
     children: React.ReactNode;
-    params: { locale: string };
+    params: Promise<{ locale: string }>;
   }>
 ) {
   const params = await props.params;
