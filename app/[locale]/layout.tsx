@@ -50,7 +50,6 @@ export default async function RootLayout(
 
   return (
     <html lang={locale}>
-      <SpeedInsights />
       <body style={{ position: "relative" }} className={BerkeleyMono.variable}>
         <div
           aria-hidden
@@ -61,6 +60,7 @@ export default async function RootLayout(
           {children}
           <Footer locale={locale} />
         </NextIntlClientProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
