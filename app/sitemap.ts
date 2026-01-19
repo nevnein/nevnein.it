@@ -1,9 +1,6 @@
-import { defaultLocale, locales } from "@/config";
+import { defaultLocale, host, locales, pathnames } from "@/config";
 import { readdir } from "fs/promises";
 import { MetadataRoute } from "next";
-
-const pathnames = ["/", "/cv", "/notes"];
-const host = "https://www.nevnein.it";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   function getUrl(pathname: string, locale: string) {
@@ -16,12 +13,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => `/notes/${dirent.name}`);
 
-  return pathnames.concat(noteSlugs).map((pathname) => ({
+  return [...pathnames, ...noteSlugs].map((pathname) => ({
     url: getUrl(pathname, defaultLocale),
     lastModified: new Date(),
     alternates: {
       languages: Object.fromEntries(
-        locales.map((locale) => [locale, getUrl(pathname, locale)])
+        locales.map((locale) => [locale, getUrl(pathname, locale)]),
       ),
     },
   }));

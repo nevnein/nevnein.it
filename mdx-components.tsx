@@ -1,4 +1,4 @@
-import type { MDXComponents } from "mdx/types";
+import type { UseMdxComponents } from "@mdx-js/mdx";
 import {
   Blockquote,
   Code,
@@ -11,17 +11,18 @@ import {
   UnorderedList,
 } from "./components/Mdx";
 
-export function useMDXComponents(components: MDXComponents): MDXComponents {
-  return {
-    ...components,
-    h1: H1,
-    h2: H2,
-    h3: H3,
-    p: Paragraph,
-    a: ExternalLink,
-    li: ListItem,
-    blockquote: Blockquote,
-    ul: UnorderedList,
-    pre: Code,
-  };
-}
+const components = {
+  h1: H1,
+  h2: H2,
+  h3: H3,
+  p: Paragraph,
+  a: ExternalLink,
+  li: ListItem,
+  blockquote: Blockquote,
+  ul: UnorderedList,
+  pre: Code,
+};
+
+export const useMDXComponents = () => {
+  return components;
+};

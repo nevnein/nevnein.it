@@ -18,9 +18,11 @@ export async function generateMetadata(props: {
   const basicMetadata = await getMetadata(locale, "HomePage");
   return {
     ...basicMetadata,
+    metadataBase:
+      process.env.NODE_ENV === "production" ? "https://nevnein.com" : undefined,
     alternates: {
       languages: Object.fromEntries(
-        locales.map((locale) => [locale, `https://nevnein.it/${locale}`])
+        locales.map((locale) => [locale, `https://nevnein.it/${locale}`]),
       ),
     },
   };
@@ -36,7 +38,7 @@ export default async function RootLayout(
   props: Readonly<{
     children: React.ReactNode;
     params: Promise<{ locale: string }>;
-  }>
+  }>,
 ) {
   const params = await props.params;
 

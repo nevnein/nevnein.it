@@ -8,6 +8,8 @@ export async function generateImageMetadata({
 }: {
   params: { locale: string; note: string };
 }) {
+  if (!locale || !note) return [];
+
   const {
     metadata: { title },
   } = await getNote(locale, note);
@@ -23,10 +25,14 @@ export async function generateImageMetadata({
 }
 
 export default async function Image({
-  params: { locale, note },
+  params,
 }: {
-  params: { locale: string; note: string };
+  params: Promise<{ locale: string; note: string }>;
 }) {
+  const { locale, note } = await params;
+
+  if (!locale || !note) return {};
+
   const {
     metadata: { title, published },
   } = await getNote(locale, note);
