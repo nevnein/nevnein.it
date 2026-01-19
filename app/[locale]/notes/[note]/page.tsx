@@ -11,7 +11,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 export async function generateStaticParams() {
   const slugs = await getAllNotes("en");
   return slugs.flatMap(({ slug }) =>
-    locales.map((locale) => ({ note: slug, locale }))
+    locales.map((locale) => ({ note: slug, locale })),
   );
 }
 
@@ -40,7 +40,7 @@ export async function generateMetadata(props: {
         locales.map((locale) => [
           locale,
           `https://nevnein.it/${locale}/notes/${note}`,
-        ])
+        ]),
       ),
     },
   };

@@ -10,48 +10,49 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.26.25",
-    "@formatjs/intl-localematcher": "^0.5.5",
-    "@mdx-js/loader": "^3.1.0",
-    "@mdx-js/react": "^3.1.0",
-    "@next/mdx": "15.0.0",
-    "@shikijs/rehype": "^1.22.0",
-    "@types/mdx": "^2.0.13",
-    "@vercel/speed-insights": "^1.0.13",
+    "@floating-ui/react": "^0.27.16",
+    "@formatjs/intl-localematcher": "^0.7.5",
+    "@mdx-js/loader": "^3.1.1",
+    "@mdx-js/mdx": "^3.1.1",
+    "@mdx-js/react": "^3.1.1",
+    "@next/mdx": "16.1.1",
+    "@shikijs/rehype": "^3.21.0",
+    "@vercel/speed-insights": "^1.3.1",
     "clsx": "^2.1.1",
     "dashify": "^2.0.0",
-    "next": "15.0.0",
-    "next-intl": "^3.23.1",
+    "next": "16.1.1",
+    "next-intl": "^4.7.0",
     "perlin-noise-3d": "^0.5.4",
-    "react": "19.0.0-rc-65a56d0e-20241020",
+    "react": "19.2.3",
     "react-children-utilities": "^2.10.0",
-    "react-dom": "19.0.0-rc-65a56d0e-20241020",
+    "react-dom": "19.2.3",
     "remark-heading-id": "^1.0.1"
   },
   "devDependencies": {
-    "@shikijs/twoslash": "^1.22.0",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/react": "^16.0.1",
+    "@shikijs/twoslash": "^3.21.0",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.1",
     "@types/dashify": "^1.0.3",
-    "@types/node": "^20",
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
-    "@vitejs/plugin-react": "^4.3.3",
+    "@types/node": "^24.10.7",
+    "@types/react": "19.2.8",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "^4.7.0",
     "eslint": "^9",
-    "eslint-config-next": "15.0.0",
-    "hast-util-to-jsx-runtime": "^2.3.2",
+    "eslint-config-next": "16.1.1",
+    "hast-util-to-jsx-runtime": "^2.3.6",
     "jsdom": "^25.0.1",
-    "shiki": "^1.22.0",
+    "shiki": "^3.21.0",
     "typescript": "^5",
-    "vitest": "^2.1.3"
-  },
-  "overrides": {
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
+    "vitest": "^2.1.9"
   },
   "pnpm": {
     "patchedDependencies": {
       "@types/mdx": "patches/@types__mdx.patch"
+    },
+    "overrides": {
+      "@types/react": "19.2.8",
+      "@types/react-dom": "19.2.3"
     }
-  }
+  },
+  "packageManager": "pnpm@10.28.1+sha512.7d7dbbca9e99447b7c3bf7a73286afaaf6be99251eb9498baefa7d406892f67b879adb3a1d7e687fc4ccc1a388c7175fbaae567a26ab44d1067b54fcb0d6a316"
 }

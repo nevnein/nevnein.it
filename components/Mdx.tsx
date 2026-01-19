@@ -142,17 +142,21 @@ export const Code = ({
       isValidElement<{ className: string; children: React.ReactNode[] }>(child)
     ) {
       if (child.type === "span" && child.props.className === "twoslash-hover") {
-        const newChild = jsxs(Tooltip, {
-          className: child.props.className,
-          children: [
-            jsx(TooltipContent, {
-              children: child.props.children[0],
-            }),
-            jsx(TooltipTrigger, {
-              children: child.props.children[1],
-            }),
-          ],
-        });
+        const newChild = jsxs(
+          Tooltip,
+          {
+            className: child.props.className,
+            children: [
+              jsx(TooltipContent, {
+                children: child.props.children[0],
+              }),
+              jsx(TooltipTrigger, {
+                children: child.props.children[1],
+              }),
+            ],
+          },
+          child.key ?? undefined,
+        );
 
         return newChild;
       }
@@ -161,18 +165,22 @@ export const Code = ({
         child.type === "span" &&
         child.props.className === "twoslash-hover twoslash-query-presisted"
       ) {
-        const newChild = jsxs(Tooltip, {
-          className: child.props.className,
-          open: true,
-          children: [
-            jsx(TooltipContent, {
-              children: child.props.children[0],
-            }),
-            jsx(TooltipTrigger, {
-              children: child.props.children[1],
-            }),
-          ],
-        });
+        const newChild = jsxs(
+          Tooltip,
+          {
+            className: child.props.className,
+            open: true,
+            children: [
+              jsx(TooltipContent, {
+                children: child.props.children[0],
+              }),
+              jsx(TooltipTrigger, {
+                children: child.props.children[1],
+              }),
+            ],
+          },
+          child.key ?? undefined,
+        );
 
         return newChild;
       }

@@ -26,7 +26,7 @@ export const getAllNotes = async (locale: string) => {
         `@/app/[locale]/notes/[note]/${name}/${locale}.mdx`
       );
       return { slug: name, ...metadata } as NoteMetadata & { slug: string };
-    })
+    }),
   );
 
   notes.sort((a, b) => +new Date(b.published) - +new Date(a.published));
