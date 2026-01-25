@@ -25,7 +25,7 @@ export async function generateMetadata(props: {
     ...basicMetadata,
     alternates: {
       languages: Object.fromEntries(
-        locales.map((locale) => [locale, `https://nevnein.it/${locale}/cv`])
+        locales.map((locale) => [locale, `https://nevnein.it/${locale}/cv`]),
       ),
     },
   };
@@ -41,7 +41,7 @@ export default function CvLayout(
   props: Readonly<{
     children: React.ReactNode;
     params: Promise<{ locale: string }>;
-  }>
+  }>,
 ) {
   const params = use(props.params);
 
@@ -86,6 +86,9 @@ export default function CvLayout(
               <li>
                 <Link href="#esperienze-lavorative">{t("experience")}</Link>
                 <ul className={styles.index}>
+                  <li>
+                    <a href="#work-at-labdigital">Senior SE @LabDigital</a>
+                  </li>
                   <li>
                     <a href="#work-at-modo">Lead frontend @MODO</a>
                   </li>
