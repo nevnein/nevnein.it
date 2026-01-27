@@ -62,3 +62,13 @@
     max-width: 100%;
   }
 }
+
+.print-section {
+  display: contents;
+}
+
+@media print {
+  .print-section {
+    break-inside: avoid;
+  }
+}

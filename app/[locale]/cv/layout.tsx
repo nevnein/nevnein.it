@@ -149,3 +149,7 @@ export default function CvLayout(
     </MainContainer>
   );
 }
+
+export const PrintSection = ({ children }: { children: React.ReactNode }) => (
+  <div className="print-section">{children}</div>
+);
