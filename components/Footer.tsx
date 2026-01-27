@@ -26,6 +26,7 @@ export const Footer = ({ locale }: { locale: string }) => {
                   {chunks}
                 </a>
               ),
+              year: (chunks) => <time>{new Date().getFullYear()}</time>,
             })}
           </p>
         </footer>

@@ -4,6 +4,12 @@
   grid-column: 2 / 3;
 }
 
+@media print {
+  h4.heading {
+    padding-top: 0;
+  }
+}
+
 .smallHeading {
   font-weight: bold;
   grid-column: 2 / 3;

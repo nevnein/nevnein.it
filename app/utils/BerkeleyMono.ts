@@ -8,7 +8,7 @@ export const BerkeleyMono = localFont({
       weight: "400",
     },
     {
-      path: "./../fonts/BerkeleyMono-Italic.woff2",
+      path: "./../fonts/BerkeleyMono-Oblique.woff2",
       style: "italic",
       weight: "400",
     },
@@ -18,7 +18,7 @@ export const BerkeleyMono = localFont({
       weight: "600",
     },
     {
-      path: "./../fonts/BerkeleyMono-BoldItalic.woff2",
+      path: "./../fonts/BerkeleyMono-Bold-Oblique.woff2",
       style: "italic",
       weight: "600",
     },

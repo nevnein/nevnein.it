@@ -46,9 +46,6 @@
     "vitest": "^2.1.9"
   },
   "pnpm": {
-    "patchedDependencies": {
-      "@types/mdx": "patches/@types__mdx.patch"
-    },
     "overrides": {
       "@types/react": "19.2.8",
       "@types/react-dom": "19.2.3"

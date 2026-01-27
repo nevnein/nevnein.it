@@ -5,10 +5,10 @@ import { join } from "node:path";
 
 const getFonts = async (): Promise<ImageResponseOptions["fonts"]> => {
   const regular = await readFile(
-    join(process.cwd(), "public/BerkeleyMono-Regular.ttf"),
+    join(process.cwd(), "app/fonts/BerkeleyMono-Regular.ttf"),
   );
   const bold = await readFile(
-    join(process.cwd(), "public/BerkeleyMono-Bold.ttf"),
+    join(process.cwd(), "app/fonts/BerkeleyMono-Bold.ttf"),
   );
 
   return [
