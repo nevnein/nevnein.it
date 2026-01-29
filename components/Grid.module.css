@@ -5,6 +5,30 @@
   position: relative;
 }
 
+.content {
+  padding: 0 1ch;
+}
+
+.autofillH {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.autofillV {
+  position: relative;
+  overflow: hidden;
+}
+
+.autofillVInner {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-auto-rows: var(--line);
+  grid-auto-columns: 1ch;
+  max-height: fill-available;
+  overflow: hidden;
+}
+
 @media print {
   .grid {
     max-width: 50%;

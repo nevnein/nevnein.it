@@ -1,8 +1,11 @@
 "use client";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext } from "react";
 import styles from "./Grid.module.css";
 import { Graphic } from "./Graphic";
 import { BORDERS, BREAKS, CORNERS } from "./utils";
+
+const H_FILL_COUNT = 500;
+const V_FILL_COUNT = 100;
 
 type GridType = "single" | "double";
 
@@ -64,7 +67,7 @@ const Content = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Autofill direction="v" filler={BORDERS[grid.left].v} />
-      <div style={{ padding: "0 1ch" }}>{children}</div>
+      <div className={styles.content}>{children}</div>
       <Autofill direction="v" filler={BORDERS[grid.right].v} />
     </>
   );
@@ -90,56 +93,15 @@ const Autofill = ({
   direction: "h" | "v";
   filler: string;
 }) => {
-  const container = useRef<HTMLDivElement>(null);
-  const [charNumber, setCharNumber] = useState(90);
-
-  useEffect(() => {
-    const base = document.getElementById("measurer")?.getBoundingClientRect();
-    const baseHeight = base?.height || 1;
-    const baseWidth = base?.width || 1;
-
-    if (container.current) {
-      const { width, height } = container.current.getBoundingClientRect();
-      setCharNumber(
-        Math.round(direction === "h" ? width / baseWidth : height / baseHeight)
-      );
-    }
-  }, [direction]);
-
   return direction === "h" ? (
-    <div
-      ref={container}
-      style={{
-        maxWidth: "100%",
-        overflow: "hidden",
-      }}
-    >
-      <Graphic>{filler.repeat(charNumber)}</Graphic>
+    <div className={styles.autofillH}>
+      <Graphic>{filler.repeat(H_FILL_COUNT)}</Graphic>
     </div>
   ) : (
-    <div
-      ref={container}
-      style={{
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          display: "grid",
-          gridAutoRows: "var(--line)",
-          gridAutoColumns: "1ch",
-          maxHeight: "fill-available",
-          overflow: "hidden",
-        }}
-      >
-        {new Array(charNumber).fill(filler).map((c, i) => (
-          <Graphic key={i}>{c}</Graphic>
+    <div className={styles.autofillV}>
+      <div className={styles.autofillVInner}>
+        {Array.from({ length: V_FILL_COUNT }, (_, i) => (
+          <Graphic key={i}>{filler}</Graphic>
         ))}
       </div>
     </div>

@@ -18,6 +18,7 @@ export const CORNERS = {
       br: "┘",
     },
     double: {
+      // These corners are currently not supported by Berkeley Mono
       // tl: "╓",
       // tr: "╖",
       // bl: "╙",
@@ -36,6 +37,7 @@ export const CORNERS = {
       br: "╝",
     },
     single: {
+      // These corners are currently not supported by Berkeley Mono
       // tl: "╒",
       // tr: "╕",
       // bl: "╘",

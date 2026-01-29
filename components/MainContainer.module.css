@@ -1,6 +1,6 @@
 .mainContainer {
-  max-width: calc(var(--main-width) + 4ch);
-  padding: 0 2ch;
+  max-width: var(--padded-main-width);
+  padding: var(--line) 2ch 0;
   margin: 0 auto;
 }
 
