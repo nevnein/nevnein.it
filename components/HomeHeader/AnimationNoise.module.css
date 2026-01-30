@@ -1,0 +1,5 @@
+.container {
+  line-break: anywhere;
+  overflow: hidden;
+  height: 100%;
+}

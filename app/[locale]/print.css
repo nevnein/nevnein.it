@@ -1,0 +1,18 @@
+/* Print styles - Global overrides */
+@media print {
+  :root {
+    --main-width: 90ch;
+    --line: 1.125rem;
+    --foreground: rgba(0 0 0 / 1);
+    --background: rgba(255 255 255 / 1);
+    --decoration: rgba(173 181 189 / 1);
+  }
+
+  body {
+    font-size: 12px;
+  }
+
+  .print-hidden {
+    display: none;
+  }
+}

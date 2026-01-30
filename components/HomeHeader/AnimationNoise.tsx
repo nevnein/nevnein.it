@@ -1,7 +1,8 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
 import { MousePositionContext } from "./MousePositionContext";
-import { LINES, LINE_LENGTH, noise } from "./utils";
+import { noise, type Dimensions } from "./utils";
+import styles from "./AnimationNoise.module.css";
 
 const CHARS = [
   " ",
@@ -26,7 +27,7 @@ const CHARS = [
   "@",
 ];
 
-export const AnimationNoise = () => {
+export const AnimationNoise = ({ lines, width }: Dimensions) => {
   const [mouseX, mouseY] = useContext(MousePositionContext);
   const [z, setZ] = useState(0);
 
@@ -39,9 +40,9 @@ export const AnimationNoise = () => {
     };
   }, []);
 
-  const Result = new Array(LINE_LENGTH * LINES).fill("0").map((_, i) => {
-    const x = i % LINE_LENGTH;
-    const y = (i - (i % LINE_LENGTH)) / LINE_LENGTH;
+  const Result = new Array(width * lines).fill("0").map((_, i) => {
+    const x = i % width;
+    const y = (i - (i % width)) / width;
     const noiseValue = noise.get(
       (x + mouseX / 20) / 20,
       (y + mouseY / 20) / 10,
@@ -51,9 +52,5 @@ export const AnimationNoise = () => {
     return CHARS[position];
   });
 
-  return (
-    <div style={{ lineBreak: "anywhere", overflow: "hidden", height: "100%" }}>
-      {Result.join("")}
-    </div>
-  );
+  return <div className={styles.container}>{Result.join("")}</div>;
 };

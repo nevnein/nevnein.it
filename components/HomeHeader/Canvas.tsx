@@ -3,20 +3,25 @@ import { useEffect, useState } from "react";
 import { AnimationLines } from "./AnimationLines";
 import { AnimationNoise } from "./AnimationNoise";
 import { MousePositionProvider } from "./MousePositionContext";
-// import { AnimationInspector } from "./AnimationInspector";
 import { AnimationMaze } from "./AnimationMaze";
+import { useDimensions } from "./useDimensions";
+import type { Dimensions } from "./utils";
+import { AnimationWave } from "./AnimationWave";
+import { AnimationInspector } from "./AnimationInspector";
 
-const animations = [
+const animations: React.FC<Dimensions>[] = [
   AnimationLines,
   AnimationNoise,
   AnimationMaze,
-  // AnimationInspector,
+  AnimationWave,
+  AnimationInspector,
 ];
 
 export const Canvas = () => {
   const [animation, setAnimation] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const dimensions = useDimensions();
 
   const Animation = animations[animation];
 
@@ -46,11 +51,11 @@ export const Canvas = () => {
 
   return isRunning ? (
     isSmallScreen ? (
-      <AnimationNoise />
+      <AnimationNoise {...dimensions} />
     ) : (
       <div onClick={() => setAnimation((animation + 1) % animations.length)}>
         <MousePositionProvider>
-          <Animation />
+          <Animation {...dimensions} />
         </MousePositionProvider>
       </div>
     )

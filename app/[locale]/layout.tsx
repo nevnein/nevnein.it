@@ -7,6 +7,8 @@ import { NextIntlClientProvider, useTranslations } from "next-intl";
 import { Footer } from "@/components/Footer";
 import { BerkeleyMono } from "../utils/BerkeleyMono";
 import "./globals.css";
+import "./print.css";
+import "./twoslash.css";
 
 export async function generateMetadata(props: {
   params: Promise<{ locale: string }>;
@@ -52,12 +54,7 @@ export default async function RootLayout(
 
   return (
     <html lang={locale}>
-      <body style={{ position: "relative" }} className={BerkeleyMono.variable}>
-        <div
-          aria-hidden
-          style={{ width: "1ch", height: "var(--line)" }}
-          id="measurer"
-        ></div>
+      <body className={BerkeleyMono.variable}>
         <NextIntlClientProvider messages={messages}>
           {children}
           <Footer locale={locale} />

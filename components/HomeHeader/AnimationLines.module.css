@@ -1,0 +1,18 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(calc(var(--header-width) / 2), 1ch);
+  grid-template-rows: repeat(var(--header-lines), var(--line));
+  column-gap: 1ch;
+}
+
+.char {
+  text-align: center;
+}
+
+.rotateNeg45 {
+  transform: rotate(-45deg);
+}
+
+.rotate45 {
+  transform: rotate(45deg);
+}

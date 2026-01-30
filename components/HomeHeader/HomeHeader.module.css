@@ -1,8 +1,15 @@
+.container {
+  max-width: calc(var(--header-width) * 1ch + 4ch);
+  padding: var(--line) 2ch 0;
+  margin: 0 auto;
+}
+
 .wrapper {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  height: calc(var(--line) * var(--header-lines));
 }
 
 .graphic {
@@ -19,4 +26,32 @@
   right: 0;
   bottom: 0;
   cursor: pointer;
+}
+
+.header {
+  margin: 0 -2ch;
+  position: relative;
+}
+
+.title {
+  font-weight: bold;
+  letter-spacing: 1ch;
+  background-color: var(--background);
+  position: relative;
+}
+
+.hint {
+  text-align: center;
+  color: var(--decoration);
+  background-color: var(--background);
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 40rem) {
+  .hint {
+    display: none;
+  }
 }

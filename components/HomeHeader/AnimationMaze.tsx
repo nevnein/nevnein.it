@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { LINES, LINE_LENGTH } from "./utils";
+import type { Dimensions } from "./utils";
+import styles from "./AnimationMaze.module.css";
 
 // This is not an efficient implementation of a disjoint set, but it's good enough for this use case
 class DisjointSet<T> {
@@ -66,46 +67,55 @@ const SINGLE_LINE_CHARS = [
   "┼",
 ];
 
-// Setup
-const internalGrid: number[][] = new Array(LINES).fill(
-  new Array(LINE_LENGTH + 2).fill(15)
-);
+function createInitialGrid(lines: number, width: number) {
+  const internalGrid: number[][] = Array.from({ length: lines }, () =>
+    new Array(width + 2).fill(15),
+  );
 
-// Add top and bottom edges
-internalGrid.unshift(new Array(LINE_LENGTH + 2).fill(14));
-internalGrid.push(new Array(LINE_LENGTH + 2).fill(11));
+  // Add top and bottom edges
+  internalGrid.unshift(new Array(width + 2).fill(14));
+  internalGrid.push(new Array(width + 2).fill(11));
 
-// Add corners and left and right edges
-const INITIAL_GRID = internalGrid.map((el, i) => {
-  switch (i) {
-    case 0:
-      return [6].concat(el, 12);
-    case internalGrid.length - 1:
-      return [3].concat(el, 9);
-    default:
-      return [7].concat(el, [13]);
-  }
-});
-
-const INITIAL_EDGES: [number, number, "W" | "N"][] = [];
-
-let mutableCells = new DisjointSet<string>();
-for (let y = 0; y < INITIAL_GRID.length - 1; y++) {
-  for (let x = 0; x < INITIAL_GRID[y].length - 1; x++) {
-    if (y !== 0) INITIAL_EDGES.push([x, y, "N"]);
-    if (x !== 0) INITIAL_EDGES.push([x, y, "W"]);
-    mutableCells.add(`${y}-${x}`);
-  }
+  // Add corners and left and right edges
+  return internalGrid.map((el, i) => {
+    switch (i) {
+      case 0:
+        return [6].concat(el, 12);
+      case internalGrid.length - 1:
+        return [3].concat(el, 9);
+      default:
+        return [7].concat(el, [13]);
+    }
+  });
 }
 
-let mutableEdges = INITIAL_EDGES.slice();
+function createInitialEdges(grid: number[][]) {
+  const edges: [number, number, "W" | "N"][] = [];
+  for (let y = 0; y < grid.length - 1; y++) {
+    for (let x = 0; x < grid[y].length - 1; x++) {
+      if (y !== 0) edges.push([x, y, "N"]);
+      if (x !== 0) edges.push([x, y, "W"]);
+    }
+  }
+  return edges;
+}
+
+function createInitialCells(grid: number[][]) {
+  const cells = new DisjointSet<string>();
+  for (let y = 0; y < grid.length - 1; y++) {
+    for (let x = 0; x < grid[y].length - 1; x++) {
+      cells.add(`${y}-${x}`);
+    }
+  }
+  return cells;
+}
 
 // Pop a random edge until the two cells are disconnected or the array is empty
 // Should probably shuffle the array and move the index instead
 const popEdge = (
   edges: [number, number, "W" | "N"][],
-  cells: DisjointSet<string>
-) => {
+  cells: DisjointSet<string>,
+): [number, number, "W" | "N"] | null => {
   if (edges.length === 0) return null;
   const edge = edges.splice(Math.floor(Math.random() * edges.length), 1)[0];
   const [x, y, dir] = edge;
@@ -140,44 +150,40 @@ const removeEdge = (grid: number[][], edge: [number, number, "W" | "N"]) => {
   return newGrid;
 };
 
-export const AnimationMaze = () => {
-  const [grid, setGrid] = useState(INITIAL_GRID);
+export const AnimationMaze = ({ lines, width }: Dimensions) => {
+  const initialGrid = useRef(createInitialGrid(lines, width));
+  const edges = useRef(createInitialEdges(initialGrid.current));
+  const cells = useRef(createInitialCells(initialGrid.current));
+  const [grid, setGrid] = useState(initialGrid.current);
+
+  // Reset when dimensions change
+  useEffect(() => {
+    initialGrid.current = createInitialGrid(lines, width);
+    edges.current = createInitialEdges(initialGrid.current);
+    cells.current = createInitialCells(initialGrid.current);
+    setGrid(initialGrid.current);
+  }, [lines, width]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const edge = popEdge(mutableEdges, mutableCells);
+      const edge = popEdge(edges.current, cells.current);
       if (edge) {
         setGrid((oldGrid) => removeEdge(oldGrid, edge));
       } else {
         // Out of edges, reset
-        mutableCells = new DisjointSet<string>();
-        for (let y = 0; y < INITIAL_GRID.length - 1; y++) {
-          for (let x = 0; x < INITIAL_GRID[y].length - 1; x++) {
-            mutableCells.add(`${y}-${x}`);
-          }
-        }
-        mutableEdges = INITIAL_EDGES.slice();
-        setGrid(INITIAL_GRID);
+        edges.current = createInitialEdges(initialGrid.current);
+        cells.current = createInitialCells(initialGrid.current);
+        setGrid(initialGrid.current);
       }
-    }, 60);
+    }, 30);
 
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [lines, width]);
 
   return (
-    <div
-      // style={{
-      //   lineBreak: "anywhere",
-      //   margin: "calc(var(--line) * -1) -2ch",
-      // }}
-      style={{
-        display: "grid",
-        margin: "calc(var(--line) * -1) -2ch",
-        gridTemplate: `repeat(${LINES}, 1fr) / repeat(${LINE_LENGTH + 4}, 1ch)`,
-      }}
-    >
+    <div className={styles.grid}>
       {grid.flatMap((line, y) =>
         line.map((el, i) => (
           <span key={`${y}-${i}-${el}`}>{SINGLE_LINE_CHARS[el]}</span>

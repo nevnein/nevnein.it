@@ -1,0 +1,6 @@
+.grid {
+  display: grid;
+  margin: calc(var(--line) * -1) -2ch;
+  grid-template-columns: repeat(calc(var(--header-width) + 4), 1ch);
+  grid-template-rows: repeat(var(--header-lines), 1fr);
+}

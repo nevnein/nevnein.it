@@ -1,61 +1,107 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
-import { LINES, LINE_LENGTH, noise } from "./utils";
+import { useContext, useEffect, useRef, useState } from "react";
+import { noise, type Dimensions } from "./utils";
 import { MousePositionContext } from "./MousePositionContext";
+import styles from "./AnimationWave.module.css";
 
-// const generateWave = (noiseX: number, noiseY = 0, noiseZ = 0) => {
-//   const result = new Array(LINES * LINE_LENGTH).fill(" ").map((_, i) => {
-//     const x = i % LINE_LENGTH;
-//     const y = (i - (i % LINE_LENGTH)) / LINE_LENGTH;
-//     const level = noise.get((x + noiseX) / 10, noiseY / 10, noiseZ);
-//     const treshold = Math.floor(level * LINES * LIMITER);
+// Density characters based on overlap count (0-3 waves)
+const DENSITY_CHARS = [" ", "░", "▒", "█"];
 
-//     if (treshold < y) return "█";
-//     if (treshold >= y && treshold < y + 1) return "▓";
-//     if (treshold >= y + 1 && treshold < y + 2) return "▒";
-//     if (treshold >= y + 2 && treshold < y + 3) return "░";
-//     if (treshold >= y + 3) return " ";
-//   });
-//   return result;
-// };
+type WaveParams = {
+  amplitude: number;
+  waveOffsets: number[];
+};
 
-const LIMITER = 3 / 2;
-
-const generateWave = (input: number) => {
-  const wave: string[][] = new Array(LINES).fill(
-    new Array(LINE_LENGTH).fill(" ")
+const generateWaves = (
+  input: number,
+  lines: number,
+  width: number,
+  { amplitude, waveOffsets }: WaveParams
+) => {
+  // Initialize grid with overlap counts
+  const grid: number[][] = Array.from({ length: lines }, () =>
+    new Array(width).fill(0)
   );
 
-  return wave.map((row, y) =>
-    row.map((_el, x) => {
-      const waveHeight =
-        noise.get((x + input * 2) / 5, 0, 0) * (LINES - 1) * LIMITER;
-      return waveHeight > y && waveHeight < y + 1 ? "█" : " ";
-    })
+  // Generate each wave and fill the area below it
+  waveOffsets.forEach((verticalOffset, waveIndex) => {
+    for (let x = 0; x < width; x++) {
+      // Each wave uses different noise coordinates for variety
+      const noiseValue = noise.get(
+        (x + input * 2) / 20,
+        waveIndex * 0.5,
+        input * 0.02
+      );
+
+      // Wave height centered around its vertical offset
+      const waveAmplitude = lines * amplitude;
+      const centerY = verticalOffset * lines;
+      const waveY = centerY + (noiseValue - 0.5) * waveAmplitude;
+
+      // Fill all cells BELOW the wave (y >= waveY)
+      for (let y = 0; y < lines; y++) {
+        if (y >= waveY) {
+          grid[y][x]++;
+        }
+      }
+    }
+  });
+
+  // Convert overlap counts to density characters
+  return grid.map((row) =>
+    row.map((count) => DENSITY_CHARS[Math.min(count, DENSITY_CHARS.length - 1)])
   );
 };
 
-export const AnimationWave = () => {
+export const AnimationWave = ({ lines, width }: Dimensions) => {
   const [input, setInput] = useState(0);
   const [mouseX, mouseY] = useContext(MousePositionContext);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [bounds, setBounds] = useState({ top: 0, left: 0, width: 1, height: 1 });
+
+  // Measure container for relative mouse position
+  useEffect(() => {
+    const measure = () => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setBounds({ top: rect.top, left: rect.left, width: rect.width, height: rect.height });
+      }
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    window.addEventListener("scroll", measure, true);
+    return () => {
+      window.removeEventListener("resize", measure);
+      window.removeEventListener("scroll", measure, true);
+    };
+  }, []);
+
+  // Calculate relative mouse position (0-1 range, clamped)
+  const relativeX = Math.max(0, Math.min(1, (mouseX - bounds.left) / bounds.width));
+  const relativeY = Math.max(0, Math.min(1, (mouseY - bounds.top) / bounds.height));
+
+  // Horizontal: Amplitude based on distance from center
+  // Center = max amplitude (wavy), edges = min amplitude (flat)
+  const distanceFromCenter = Math.abs(relativeX - 0.5) * 2; // 0 at center, 1 at edges
+  const amplitude = 0.1 + (1 - distanceFromCenter) * 0.5;
+
+  // Vertical: Wave separation (perspective effect)
+  // Top = compressed (distant horizon), bottom = spread (close up)
+  const separation = 0.1 + relativeY * 0.3;
+  const waveOffsets = [0.5 - separation, 0.5, 0.5 + separation];
+
   useEffect(() => {
     const interval = setInterval(() => {
       setInput((prev) => prev + 1);
     }, 60);
-    return () => {
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <div style={{ display: "grid", grid: "repeat(5, 1fr) / repeat(60, 1fr)" }}>
-      {generateWave(input).map((row, y) =>
-        row.map((el, x) => (
-          <span data-pos={`${y}-${x}`} key={`${y}-${x}`}>
-            {el}
-          </span>
-        ))
+    <div ref={containerRef} className={styles.grid}>
+      {generateWaves(input, lines, width, { amplitude, waveOffsets }).flatMap(
+        (row, y) => row.map((char, x) => <span key={`${y}-${x}`}>{char}</span>)
       )}
     </div>
   );

@@ -1,0 +1,28 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: calc(var(--line) * var(--header-lines));
+  overflow: hidden;
+  font-size: 0.875rem;
+}
+
+.panel {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.panelRight {
+  margin: 0;
+  white-space: pre;
+  text-align: right;
+  justify-self: end;
+}
+
+.panelTop {
+  align-self: start;
+}
+
+.panelBottom {
+  align-self: end;
+}
