@@ -18,34 +18,36 @@ export default function Notes(props: { params: Promise<{ locale: string }> }) {
   const t = useTranslations("HomePage");
 
   return (
-    <MainContainer>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "var(--line)",
-        }}
-      >
-        <HomeHeader />
-        <p>{t("greeting")}</p>
-        <p>{t("intro")}</p>
-        <nav
+    <>
+      <HomeHeader />
+      <MainContainer>
+        <div
           style={{
             display: "flex",
-            columnGap: "6ch",
-            rowGap: "var(--line)",
-            flexWrap: "wrap",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "var(--line)",
           }}
         >
-          <Link href="/cv">Curriculum Vitæ</Link>
-          <Link href="/notes">{t("notes")}</Link>
-          <Link href="/" locale={params.locale === "en" ? "it" : "en"}>
-            {t("locale")}
-          </Link>
-        </nav>
-      </div>
-    </MainContainer>
+          <p>{t("greeting")}</p>
+          <p>{t("intro")}</p>
+          <nav
+            style={{
+              display: "flex",
+              columnGap: "6ch",
+              rowGap: "var(--line)",
+              flexWrap: "wrap",
+            }}
+          >
+            <Link href="/cv">Curriculum Vitæ</Link>
+            <Link href="/notes">{t("notes")}</Link>
+            <Link href="/" locale={params.locale === "en" ? "it" : "en"}>
+              {t("locale")}
+            </Link>
+          </nav>
+        </div>
+      </MainContainer>
+    </>
   );
 }

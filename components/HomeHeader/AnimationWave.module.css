@@ -1,0 +1,5 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--header-width), 1ch);
+  grid-template-rows: repeat(var(--header-lines), 1fr);
+}

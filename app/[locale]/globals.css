@@ -18,6 +18,29 @@
   --decoration: rgba(173 181 189 / 1);
   --blue-rgb: 38 72 225;
   --blue: rgb(var(--blue-rgb));
+  --header-lines: 19;
+  --header-width: 100;
+}
+
+@media (max-width: 75rem) {
+  :root {
+    --header-lines: 15;
+    --header-width: 80;
+  }
+}
+
+@media (max-width: 60rem) {
+  :root {
+    --header-lines: 15;
+    --header-width: 60;
+  }
+}
+
+@media (max-width: 40rem) {
+  :root {
+    --header-lines: 5;
+    --header-width: 60;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
